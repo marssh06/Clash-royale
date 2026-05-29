@@ -799,12 +799,13 @@ function splashStrike() {
 // ─────────────────────────────────────────────────────────────────
 function awardTeam(t) {
   if (G.bank === 0) { setFeedback('Nothing in the bank!', 'color:#facc15'); return; }
-  if (t === 1) { G.t1Score += G.bank; animScore('t1-score'); }
-  else         { G.t2Score += G.bank; animScore('t2-score'); }
+  const pts = G.bank;
+  if (t === 1) { G.t1Score += pts; animScore('t1-score'); }
+  else         { G.t2Score += pts; animScore('t2-score'); }
   G.bank = 0;
   updateBank();
   updateScores();
-  setFeedback(`+${G.bank === 0 ? '' : G.bank} awarded to ${t === 1 ? G.t1Name : G.t2Name}!`, 'color:#ffd700');
+  setFeedback(`+${pts} awarded to ${t === 1 ? G.t1Name : G.t2Name}!`, 'color:#ffd700');
 }
 
 function discardBank() {
