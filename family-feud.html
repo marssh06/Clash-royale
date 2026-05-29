@@ -24,14 +24,14 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
 /* ── STRIKES ── */
 .strike-dot{font-size:2.8rem;font-weight:900;transition:color .3s,text-shadow .3s;color:#2a2a2a}
 .strike-dot.lit{color:#ff1111;text-shadow:0 0 14px #f00,0 0 30px #f40}
-.strike-sm{font-size:1.5rem;font-weight:900;color:#333;transition:color .2s,text-shadow .2s;cursor:default}
+.strike-sm{font-size:1.5rem;font-weight:900;color:#333;transition:color .2s,text-shadow .2s}
 .strike-sm.lit{color:#ff1111;text-shadow:0 0 8px #f00}
 #strike-splash{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;transition:opacity .15s}
 #strike-splash.show{opacity:1}
 #strike-splash-x{font-size:min(22vw,18rem);font-weight:900;color:#f00;text-shadow:0 0 40px #f00,0 0 80px #f40,0 0 120px #f80;transform:scale(.4) rotate(-12deg);transition:transform .22s cubic-bezier(.2,1.6,.4,1)}
 #strike-splash.show #strike-splash-x{transform:scale(1) rotate(-8deg)}
 
-/* ── COLOURS / NEON ── */
+/* ── NEON ── */
 .neon-gold{color:#ffd700;text-shadow:0 0 8px #ffd700,0 0 18px rgba(255,215,0,.5)}
 .neon-orange{color:#fb923c;text-shadow:0 0 8px #fb923c,0 0 16px rgba(251,146,60,.4)}
 
@@ -50,6 +50,8 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
 .btn-gray:hover{background:#35355a;color:#ccc}
 .btn-orange{background:linear-gradient(135deg,#ea580c,#c2410c);color:#fff}
 .btn-orange:hover{filter:brightness(1.15);box-shadow:0 4px 18px rgba(234,88,12,.5)}
+.btn-teal{background:linear-gradient(135deg,#0d9488,#0f766e);color:#fff}
+.btn-teal:hover{filter:brightness(1.15);box-shadow:0 4px 14px rgba(13,148,136,.4)}
 
 /* ── SCOREBOARDS ── */
 .score-box{background:linear-gradient(135deg,rgba(29,78,216,.22),rgba(14,30,87,.3));border:2px solid rgba(255,215,0,.45);border-radius:14px}
@@ -82,7 +84,7 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
 #host-panel{width:350px;flex-shrink:0;display:flex;flex-direction:column;overflow-y:auto;background:rgba(4,2,12,.96);border-left:2px solid rgba(251,146,60,.2)}
 #host-panel.hp-hidden{display:none!important}
 
-/* ── HOST BAR (when panel hidden) ── */
+/* ── HOST BAR (minimal, when panel hidden) ── */
 #host-bar{position:fixed;bottom:0;left:0;right:0;z-index:50;background:rgba(4,2,12,.95);border-top:1px solid rgba(251,146,60,.25);padding:.5rem .75rem;display:none}
 
 /* ── HOST PANEL INTERNALS ── */
@@ -90,7 +92,7 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
 .hp-lbl{font-size:.6rem;letter-spacing:.15em;color:rgba(251,146,60,.55);text-transform:uppercase;margin-bottom:6px}
 
 /* ── CHEAT SHEET ── */
-.cheat-row{display:flex;align-items:flex-start;gap:7px;padding:5px 8px;border-radius:7px;background:rgba(255,255,255,.04);margin-bottom:3px;transition:background .2s}
+.cheat-row{display:flex;align-items:flex-start;gap:7px;padding:5px 8px;border-radius:7px;background:rgba(255,255,255,.04);margin-bottom:3px}
 .cheat-row.found{background:rgba(34,197,94,.1);opacity:.65}
 .cheat-num{font-size:.72rem;font-weight:900;color:#ffd700;min-width:16px;padding-top:1px}
 .cheat-txt{flex:1;font-size:.78rem;color:#e2e8f0;line-height:1.3}
@@ -102,6 +104,9 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
 .cat-badge{display:inline-block;font-size:.58rem;letter-spacing:.1em;padding:2px 7px;border-radius:4px;text-transform:uppercase;font-weight:700}
 .cat-classic{background:rgba(99,102,241,.25);color:#a5b4fc;border:1px solid rgba(99,102,241,.3)}
 .cat-college{background:rgba(16,185,129,.18);color:#6ee7b7;border:1px solid rgba(16,185,129,.28)}
+
+/* ── DISPLAY MODE WAITING ── */
+#display-waiting{display:none;position:absolute;inset:0;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:radial-gradient(ellipse at top,#0d0d3b 0%,#07071a 60%);z-index:10}
 
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:4px}
@@ -125,6 +130,7 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
       <div><div class="field-label">Team 2 Name</div><input id="inp-t2" class="field-input" type="text" placeholder="e.g. Disaster Adults" maxlength="22"/></div>
     </div>
     <button class="btn btn-gold w-full py-3 text-lg tracking-widest" onclick="startGame()">🎰 &nbsp;START THE GAME</button>
+    <p class="text-center text-gray-600 mt-3" style="font-size:.65rem">After starting, click <strong class="text-teal-400">📺 Display Window</strong> in the host panel to open the audience screen</p>
   </div>
 </div>
 
@@ -154,7 +160,9 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
   </div>
 </div>
 
-<!-- ── MAIN GAME ── -->
+<!-- ═══════════════════════════════════════
+     MAIN GAME
+════════════════════════════════════════ -->
 <div id="game" class="hidden">
 
   <!-- HEADER -->
@@ -166,20 +174,30 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
       </div>
       <div class="flex items-center gap-2">
         <span class="text-gray-500" style="font-size:.72rem">Q&nbsp;<span id="hdr-q" class="neon-gold font-bold">1</span>&nbsp;/&nbsp;40</span>
-        <button id="host-toggle-btn" class="btn btn-orange px-3 py-1" style="font-size:.68rem" onclick="toggleHostPanel()">◀ Hide Host</button>
-        <button class="btn btn-gray px-3 py-1" style="font-size:.68rem" onclick="showWinner()">Results</button>
-        <button class="btn btn-red px-3 py-1" style="font-size:.68rem" onclick="openResetModal()">Reset</button>
+        <!-- hidden in display mode -->
+        <div id="host-header-btns" class="flex items-center gap-2">
+          <button id="host-toggle-btn" class="btn btn-orange px-3 py-1" style="font-size:.68rem" onclick="toggleHostPanel()">◀ Hide Host</button>
+          <button class="btn btn-gray px-3 py-1" style="font-size:.68rem" onclick="showWinner()">Results</button>
+          <button class="btn btn-red px-3 py-1" style="font-size:.68rem" onclick="openResetModal()">Reset</button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- BODY: player board + host panel -->
+  <!-- BODY -->
   <div id="game-body">
 
-    <!-- ══════════════════════════════════
-         PLAYER BOARD (audience-facing)
-    ══════════════════════════════════ -->
-    <div id="player-board">
+    <!-- ══════════════════════════════
+         PLAYER BOARD (audience view)
+    ══════════════════════════════ -->
+    <div id="player-board" style="position:relative">
+
+      <!-- Waiting overlay (display mode only, before host starts) -->
+      <div id="display-waiting" style="display:none">
+        <div class="neon-gold font-black tracking-widest" style="font-size:2.5rem;text-align:center">FAMILY FEUD</div>
+        <div class="text-purple-300" style="font-size:.85rem;letter-spacing:.15em">AFTER DARK · COLLEGE EDITION</div>
+        <div class="text-gray-500 mt-4" style="font-size:.8rem">Waiting for host to start the game…</div>
+      </div>
 
       <!-- SCOREBOARDS -->
       <div class="grid gap-2 mb-2" style="grid-template-columns:1fr auto 1fr">
@@ -200,7 +218,7 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
       <!-- QUESTION -->
       <div id="question-strip" class="mb-2">
         <div class="text-yellow-500 mb-1" style="font-size:.62rem;letter-spacing:.15em">SURVEY SAYS...</div>
-        <div id="q-text" class="font-bold leading-snug" style="font-size:clamp(.9rem,2.4vw,1.25rem);color:#e8e8ff"></div>
+        <div id="q-text" class="font-bold leading-snug" style="font-size:clamp(.9rem,2.4vw,1.25rem);color:#e8e8ff">&nbsp;</div>
       </div>
 
       <!-- STRIKES -->
@@ -211,38 +229,39 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
       </div>
 
       <!-- ANSWER GRID -->
-      <div id="answer-grid" class="grid gap-2"><!-- injected --></div>
+      <div id="answer-grid" class="grid gap-2"></div>
 
     </div><!-- /#player-board -->
 
-    <!-- ══════════════════════════════════
-         HOST PANEL (private dashboard)
-    ══════════════════════════════════ -->
+    <!-- ══════════════════════════════
+         HOST PANEL (private)
+    ══════════════════════════════ -->
     <div id="host-panel">
 
-      <!-- HEADER -->
+      <!-- Header -->
       <div class="hp-sec flex items-center justify-between" style="background:rgba(251,146,60,.06);flex-shrink:0">
         <div>
           <div class="neon-orange font-black tracking-widest" style="font-size:.95rem">HOST DASHBOARD</div>
-          <div style="font-size:.58rem;letter-spacing:.1em;color:rgba(251,146,60,.4)">PRIVATE — HOST ONLY</div>
+          <div style="font-size:.55rem;letter-spacing:.1em;color:rgba(251,146,60,.35)">PRIVATE — NOT FOR AUDIENCE</div>
         </div>
-        <div class="flex gap-1">
+        <div class="flex flex-col gap-1 items-end">
+          <button class="btn btn-teal px-2 py-1" style="font-size:.6rem" onclick="openDisplayWindow()" title="Opens clean audience window — drag to your TV/projector">📺 Display Window</button>
           <span id="hp-cat" class="cat-badge cat-classic">Classic</span>
         </div>
       </div>
 
-      <!-- CURRENT Q INFO -->
+      <!-- Current Q -->
       <div class="hp-sec" style="flex-shrink:0">
         <div class="hp-lbl">Current Question &nbsp;<span id="hp-q-num" class="text-amber-400" style="font-size:.65rem">Q1/40</span></div>
-        <div id="hp-q-text" class="text-gray-300 leading-snug" style="font-size:.78rem"></div>
+        <div id="hp-q-text" class="text-gray-300 leading-snug" style="font-size:.78rem">&nbsp;</div>
       </div>
 
       <!-- CHEAT SHEET -->
-      <div class="hp-sec" style="flex:1;min-height:0">
+      <div class="hp-sec" style="flex:1;min-height:0;overflow-y:auto">
         <div class="hp-lbl">Answer Cheat Sheet
-          <span class="text-gray-600 ml-1" style="font-size:.55rem">(all answers visible to host)</span>
+          <span class="text-gray-700 ml-1" style="font-size:.52rem">(all visible to host only)</span>
         </div>
-        <div id="cheat-answers"><!-- injected --></div>
+        <div id="cheat-answers"></div>
       </div>
 
       <!-- GUESS INPUT -->
@@ -268,9 +287,9 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
           </div>
         </div>
         <div class="flex gap-1">
-          <button class="btn btn-orange flex-1" style="font-size:.65rem;padding:.25rem" onclick="setStrikeCount(1)">Set ✗ 1</button>
-          <button class="btn btn-orange flex-1" style="font-size:.65rem;padding:.25rem" onclick="setStrikeCount(2)">Set ✗ 2</button>
-          <button class="btn btn-orange flex-1" style="font-size:.65rem;padding:.25rem" onclick="setStrikeCount(3)">Set ✗ 3</button>
+          <button class="btn btn-orange flex-1" style="font-size:.65rem;padding:.25rem" onclick="setStrikeCount(1)">Set ✗1</button>
+          <button class="btn btn-orange flex-1" style="font-size:.65rem;padding:.25rem" onclick="setStrikeCount(2)">Set ✗2</button>
+          <button class="btn btn-orange flex-1" style="font-size:.65rem;padding:.25rem" onclick="setStrikeCount(3)">Set ✗3</button>
         </div>
       </div>
 
@@ -278,9 +297,9 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
       <div class="hp-sec" style="flex-shrink:0">
         <div class="hp-lbl">Award Bank &nbsp;<span id="hp-bank-val" class="text-purple-300 font-bold">0</span>&nbsp;pts</div>
         <div class="flex gap-1">
-          <button class="btn btn-gold flex-1" style="font-size:.68rem;padding:.32rem .4rem" onclick="awardTeam(1)">▶ <span id="hp-t1"></span></button>
+          <button class="btn btn-gold flex-1" style="font-size:.68rem;padding:.32rem .4rem" onclick="awardTeam(1)">▶ <span id="hp-t1">T1</span></button>
           <button class="btn btn-gray" style="font-size:.68rem;padding:.32rem .5rem" onclick="discardBank()">Discard</button>
-          <button class="btn btn-gold flex-1" style="font-size:.68rem;padding:.32rem .4rem" onclick="awardTeam(2)"><span id="hp-t2"></span> ◀</button>
+          <button class="btn btn-gold flex-1" style="font-size:.68rem;padding:.32rem .4rem" onclick="awardTeam(2)"><span id="hp-t2">T2</span> ◀</button>
         </div>
       </div>
 
@@ -297,13 +316,12 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
     </div><!-- /#host-panel -->
 
   </div><!-- /#game-body -->
-
 </div><!-- /#game -->
 
-<!-- ── HOST BAR (minimal bar when panel is hidden) ── -->
+<!-- ── HOST BAR (shown when panel is hidden) ── -->
 <div id="host-bar">
   <div class="flex gap-2 items-center max-w-3xl mx-auto">
-    <span class="text-orange-400 font-bold" style="font-size:.65rem;white-space:nowrap">HOST ▷</span>
+    <span class="text-orange-400 font-bold" style="font-size:.62rem;white-space:nowrap">HOST ▷</span>
     <input id="guess-inp-bar" class="guess-input flex-1" type="text" placeholder="Type guess, press Enter…" autocomplete="off" onkeydown="handleGuessKey(this,event)" style="font-size:.85rem;padding:.35rem .75rem"/>
     <button class="btn btn-gold px-4" style="font-size:.72rem;padding:.35rem .75rem" onclick="processGuess(document.getElementById('guess-inp-bar').value)">Check</button>
     <button class="btn btn-red px-3" style="font-size:.72rem;padding:.35rem .6rem" onclick="addStrike()">✗</button>
@@ -315,10 +333,32 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
 
 <script>
 // ═══════════════════════════════════════════════════════════
-// QUESTION DATABASE — 40 questions (20 classic + 20 college)
+// SYNC — BroadcastChannel keeps host ↔ display in sync
+// ═══════════════════════════════════════════════════════════
+const CHANNEL = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('family-feud-v2') : null;
+const IS_DISPLAY = /[?&]display/.test(location.search);
+
+if (CHANNEL) {
+  CHANNEL.onmessage = ({ data }) => {
+    if (!IS_DISPLAY && data.type === 'REQUEST_STATE') {
+      // Display window just opened — send it the current state
+      broadcastState();
+    } else if (IS_DISPLAY && data.type === 'STATE') {
+      applyRemoteState(data.G);
+    }
+  };
+}
+
+function broadcastState() {
+  if (!CHANNEL || IS_DISPLAY) return;
+  CHANNEL.postMessage({ type: 'STATE', G: JSON.parse(JSON.stringify(G)) });
+}
+
+// ═══════════════════════════════════════════════════════════
+// QUESTIONS (40 total — 20 classic + 20 college)
 // ═══════════════════════════════════════════════════════════
 const QUESTIONS = [
-  // ── CLASSIC ROUND (1–20) ──────────────────────────────
+  // ── CLASSIC (1–20) ──────────────────────────────────────
   {cat:'classic',q:"Name something your therapist has probably said about your family.",answers:[
     {t:"That's deeply traumatic",p:34},{t:"Classic boundary issues",p:24},{t:"Classic enabler behavior",p:17},
     {t:"We need more sessions",p:12},{t:"Your mother is the root cause",p:8},{t:"Have you tried journaling?",p:5}]},
@@ -380,7 +420,7 @@ const QUESTIONS = [
     {t:"Nothing works unless someone's watching",p:34},{t:"You have a confessional in the bathroom",p:26},{t:"Every exit involves a dramatic speech",p:18},
     {t:"Your friends are secretly being cast",p:12},{t:"You check your ratings before decisions",p:7},{t:"There's a rose ceremony at family dinner",p:3}]},
 
-  // ── COLLEGE ROUND (21–40) ─────────────────────────────
+  // ── COLLEGE EDITION (21–40) ──────────────────────────────
   {cat:'college',q:"Name something college students blame their low GPA on.",answers:[
     {t:"The professor just hates me",p:35},{t:"Untreated mental health issues",p:25},{t:"Working 3 jobs to pay rent",p:18},
     {t:"Too many social obligations",p:12},{t:"The pandemic (still)",p:7},{t:"Mercury in retrograde",p:3}]},
@@ -413,7 +453,7 @@ const QUESTIONS = [
     {t:"They will wake up for 8 AM no problem",p:12},{t:"They can absolutely drive",p:6},{t:"Their drunk texts were totally normal",p:3}]},
   {cat:'college',q:"Name what students tell their parents student loan money goes toward.",answers:[
     {t:"Books and course materials",p:37},{t:"Healthy food and groceries",p:27},{t:"Important school supplies",p:17},
-    {t:"Professional development events",p:11},{t:"Campus-related transportation",p:5},{t:"Tuition (ironic — spent elsewhere)",p:3}]},
+    {t:"Professional development events",p:11},{t:"Campus-related transportation",p:5},{t:"Tuition — ironic, spent elsewhere",p:3}]},
   {cat:'college',q:"Name a place on campus where students go to cry privately.",answers:[
     {t:"Single-occupancy bathroom stall",p:38},{t:"Back corner of the library",p:26},{t:"Alone in their parked car",p:18},
     {t:"Campus counseling waiting room",p:11},{t:"Behind the auditorium",p:4},{t:"Just openly sobbing in the quad",p:3}]},
@@ -434,7 +474,7 @@ const QUESTIONS = [
     {t:"Email a suspiciously vague excuse",p:12},{t:"Actually study for a different class",p:7},{t:"Become deeply invested in brunch",p:3}]},
   {cat:'college',q:"Name the worst thing about sharing a college dorm bathroom.",answers:[
     {t:"Unexplained hair absolutely everywhere",p:36},{t:"Someone showers loudly at 3 AM",p:25},{t:"Running out of hot water daily",p:18},
-    {t:"The smell that never fully leaves",p:13},{t:"One person's 45-minute showers",p:5},{t:"Flip-flops now required footwear at all times",p:3}]},
+    {t:"The smell that never fully leaves",p:13},{t:"One person's 45-minute showers",p:5},{t:"Flip-flops now required at all times",p:3}]},
   {cat:'college',q:"Name something a college student brags about that's actually embarrassing.",answers:[
     {t:"'I only slept 2 hours'",p:35},{t:"'Haven't been to class in 3 weeks'",p:26},{t:"'I live entirely on energy drinks'",p:18},
     {t:"'Wrote the whole essay the night before'",p:12},{t:"'I can do a keg stand'",p:6},{t:"'Never cooked a real meal in my life'",p:3}]},
@@ -446,12 +486,49 @@ const QUESTIONS = [
 // ═══════════════════════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════════════════════
-let G = {
-  t1Name:'Team 1', t2Name:'Team 2',
-  t1Score:0, t2Score:0,
-  curQ:0, strikes:0, bank:0, revealed:[],
-};
+let G = { t1Name:'Team 1', t2Name:'Team 2', t1Score:0, t2Score:0, curQ:0, strikes:0, bank:0, revealed:[] };
 let hostPanelVisible = true;
+
+// ═══════════════════════════════════════════════════════════
+// DISPLAY MODE — applyRemoteState
+// ═══════════════════════════════════════════════════════════
+function applyRemoteState(newG) {
+  const prevQ       = G.curQ;
+  const prevRev     = G.revealed ? [...G.revealed] : [];
+  const prevStrikes = G.strikes;
+  const newQuestion = newG.curQ !== prevQ || newG.revealed.length !== prevRev.length;
+
+  // Hide waiting overlay on first real state
+  const waiting = document.getElementById('display-waiting');
+  if (waiting) waiting.style.display = 'none';
+
+  if (newQuestion) {
+    G = newG;
+    document.getElementById('q-text').textContent   = QUESTIONS[G.curQ].q;
+    document.getElementById('hdr-q').textContent    = G.curQ + 1;
+    document.getElementById('t1-name').textContent  = G.t1Name;
+    document.getElementById('t2-name').textContent  = G.t2Name;
+    renderGrid();
+  } else {
+    G = newG;
+    // Animate newly revealed cards
+    newG.revealed.forEach((rev, i) => {
+      if (rev && !prevRev[i]) {
+        const el = document.getElementById(`card-${i}`);
+        if (el && !el.classList.contains('flipped')) {
+          el.classList.add('flipped');
+          setTimeout(()=>{ el.classList.add('reveal-flash'); setTimeout(()=>el.classList.remove('reveal-flash'), 900); }, 300);
+        }
+      }
+    });
+    // Trigger strike flash if strikes increased
+    if (newG.strikes > prevStrikes) splashStrike();
+  }
+
+  updateBank();
+  updateScores();
+  renderStrikes();
+}
 
 // ═══════════════════════════════════════════════════════════
 // START GAME
@@ -459,11 +536,15 @@ let hostPanelVisible = true;
 function startGame() {
   G.t1Name = (document.getElementById('inp-t1').value.trim() || 'Team 1').toUpperCase();
   G.t2Name = (document.getElementById('inp-t2').value.trim() || 'Team 2').toUpperCase();
-  ['t1-name','t2-name'].forEach((id,i)=>document.getElementById(id).textContent=i===0?G.t1Name:G.t2Name);
+  document.getElementById('t1-name').textContent = G.t1Name;
+  document.getElementById('t2-name').textContent = G.t2Name;
+  document.getElementById('hp-t1').textContent = abbr(G.t1Name);
+  document.getElementById('hp-t2').textContent = abbr(G.t2Name);
   document.getElementById('setup-modal').classList.add('hidden');
   document.getElementById('game').classList.remove('hidden');
   loadQ(0);
 }
+function abbr(n) { return n.length>10 ? n.slice(0,10)+'…' : n; }
 
 // ═══════════════════════════════════════════════════════════
 // LOAD QUESTION
@@ -480,16 +561,17 @@ function loadQ(idx) {
   if (gb) gb.value = '';
   setFeedback('','');
   updateBank(); renderStrikes(); renderGrid(); updateCheatSheet();
+  broadcastState();
 }
 
 // ═══════════════════════════════════════════════════════════
-// RENDER ANSWER GRID
+// RENDER GRID
 // ═══════════════════════════════════════════════════════════
 function renderGrid() {
   const q = QUESTIONS[G.curQ];
   const grid = document.getElementById('answer-grid');
   const n = q.answers.length;
-  let cols = n<=4 ? 'grid-cols-2' : n<=6 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-2 sm:grid-cols-4';
+  const cols = n<=4 ? 'grid-cols-2' : n<=6 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-2 sm:grid-cols-4';
   grid.className = `grid gap-2 ${cols}`;
   grid.innerHTML = '';
   q.answers.forEach((ans, i) => {
@@ -497,8 +579,7 @@ function renderGrid() {
     div.className = `card-wrap${G.revealed[i]?' flipped':''}`;
     div.id = `card-${i}`;
     div.style.height = '76px';
-    div.style.cursor = 'pointer';
-    div.onclick = ()=>{ if(!G.revealed[i]) revealCard(i, true); };
+    if (!IS_DISPLAY) { div.style.cursor='pointer'; div.onclick=()=>{ if(!G.revealed[i]) revealCard(i,true); }; }
     div.innerHTML = `<div class="card-inner">
       <div class="card-face card-front"><span style="font-size:1.7rem;font-weight:900;color:#ffd700">${i+1}</span></div>
       <div class="card-face card-back">
@@ -522,34 +603,27 @@ function revealCard(i, addToBank) {
   }
   if (addToBank) { G.bank += QUESTIONS[G.curQ].answers[i].p; updateBank(); }
   updateCheatSheet();
+  broadcastState();
 }
 
 // ═══════════════════════════════════════════════════════════
-// UPDATE CHEAT SHEET (host panel)
+// CHEAT SHEET
 // ═══════════════════════════════════════════════════════════
 function updateCheatSheet() {
   const q = QUESTIONS[G.curQ];
-  const el = id => document.getElementById(id);
-
-  const qn = el('hp-q-num'); if (qn) qn.textContent = `Q${G.curQ+1}/40`;
-  const qt = el('hp-q-text'); if (qt) qt.textContent = q.q;
-  const hb = el('hp-bank-val'); if (hb) hb.textContent = G.bank;
-  const ht1 = el('hp-t1'); if (ht1) ht1.textContent = G.t1Name.length>10?G.t1Name.slice(0,10)+'…':G.t1Name;
-  const ht2 = el('hp-t2'); if (ht2) ht2.textContent = G.t2Name.length>10?G.t2Name.slice(0,10)+'…':G.t2Name;
-
-  const cat = el('hp-cat');
-  if (cat) {
-    cat.textContent = q.cat==='college'?'College':'Classic';
-    cat.className = `cat-badge ${q.cat==='college'?'cat-college':'cat-classic'}`;
-  }
-
-  const container = el('cheat-answers');
-  if (!container) return;
-  container.innerHTML = q.answers.map((ans,i)=>`
+  const $ = id => document.getElementById(id);
+  const qn=$('hp-q-num'); if(qn) qn.textContent=`Q${G.curQ+1}/40`;
+  const qt=$('hp-q-text'); if(qt) qt.textContent=q.q;
+  const hb=$('hp-bank-val'); if(hb) hb.textContent=G.bank;
+  const cat=$('hp-cat');
+  if(cat){ cat.textContent=q.cat==='college'?'College':'Classic'; cat.className=`cat-badge ${q.cat==='college'?'cat-college':'cat-classic'}`; }
+  const c=$('cheat-answers');
+  if(!c) return;
+  c.innerHTML = q.answers.map((a,i)=>`
     <div class="cheat-row${G.revealed[i]?' found':''}">
       <span class="cheat-num">${i+1}.</span>
-      <span class="cheat-txt">${ans.t}</span>
-      <span class="cheat-pts">${ans.p}pts</span>
+      <span class="cheat-txt">${a.t}</span>
+      <span class="cheat-pts">${a.p}pts</span>
       ${G.revealed[i]?'<span class="cheat-ck">✓</span>':''}
     </div>`).join('');
 }
@@ -557,159 +631,114 @@ function updateCheatSheet() {
 // ═══════════════════════════════════════════════════════════
 // GUESS LOGIC
 // ═══════════════════════════════════════════════════════════
-function handleGuessKey(input, e) { if (e.key==='Enter') processGuess(input.value); }
+function handleGuessKey(inp, e) { if(e.key==='Enter') processGuess(inp.value); }
 
 function processGuess(raw) {
   const guess = (raw||'').trim().toLowerCase();
-  if (!guess) return;
-  const gi = document.getElementById('guess-inp');
-  const gb = document.getElementById('guess-inp-bar');
-  if (gi) { gi.value=''; if(hostPanelVisible) gi.focus(); }
-  if (gb) { gb.value=''; if(!hostPanelVisible) gb.focus(); }
-
-  const q = QUESTIONS[G.curQ];
-  let found = -1;
-  for (let i=0; i<q.answers.length; i++) {
-    if (G.revealed[i]) continue;
-    if (isMatch(guess, q.answers[i].t.toLowerCase())) { found=i; break; }
+  if(!guess) return;
+  const gi=document.getElementById('guess-inp'), gb=document.getElementById('guess-inp-bar');
+  if(gi){ gi.value=''; if(hostPanelVisible) gi.focus(); }
+  if(gb){ gb.value=''; if(!hostPanelVisible) gb.focus(); }
+  const q=QUESTIONS[G.curQ];
+  let found=-1;
+  for(let i=0;i<q.answers.length;i++){
+    if(G.revealed[i]) continue;
+    if(isMatch(guess,q.answers[i].t.toLowerCase())){ found=i; break; }
   }
-  if (found >= 0) {
-    revealCard(found, true);
-    setFeedback(`✓ Survey says! +${q.answers[found].p} pts`, 'color:#4ade80');
-  } else {
-    setFeedback('✗ Not on the board!', 'color:#f87171');
-  }
+  if(found>=0){ revealCard(found,true); setFeedback(`✓ Survey says! +${q.answers[found].p} pts`,'color:#4ade80'); }
+  else        { setFeedback('✗ Not on the board!','color:#f87171'); }
 }
 
-function isMatch(g, a) {
-  if (a.includes(g) || g.includes(a)) return true;
-  const gw = g.split(/\s+/).filter(w=>w.length>2);
-  const aw = a.split(/\s+/).filter(w=>w.length>2);
-  for (const gx of gw) for (const ax of aw) {
-    if (ax.includes(gx) || gx.includes(ax)) return true;
-    if (gx.length>4 && ax.length>4 && lev(gx,ax)<=2) return true;
+function isMatch(g,a){
+  if(a.includes(g)||g.includes(a)) return true;
+  const gw=g.split(/\s+/).filter(w=>w.length>2), aw=a.split(/\s+/).filter(w=>w.length>2);
+  for(const gx of gw) for(const ax of aw){
+    if(ax.includes(gx)||gx.includes(ax)) return true;
+    if(gx.length>4&&ax.length>4&&lev(gx,ax)<=2) return true;
   }
   return false;
 }
-
-function lev(a,b) {
-  const m=a.length, n=b.length;
-  const d=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>j===0?i:0));
+function lev(a,b){
+  const m=a.length,n=b.length,d=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>j===0?i:0));
   for(let j=1;j<=n;j++) d[0][j]=j;
-  for(let i=1;i<=m;i++) for(let j=1;j<=n;j++)
-    d[i][j]=a[i-1]===b[j-1]?d[i-1][j-1]:1+Math.min(d[i-1][j],d[i][j-1],d[i-1][j-1]);
+  for(let i=1;i<=m;i++) for(let j=1;j<=n;j++) d[i][j]=a[i-1]===b[j-1]?d[i-1][j-1]:1+Math.min(d[i-1][j],d[i][j-1],d[i-1][j-1]);
   return d[m][n];
 }
 
 // ═══════════════════════════════════════════════════════════
 // STRIKES
 // ═══════════════════════════════════════════════════════════
-function addStrike() { if(G.strikes>=3) return; G.strikes++; renderStrikes(); splashStrike(); }
-function setStrikeCount(n) { G.strikes=Math.min(Math.max(n,0),3); renderStrikes(); if(n>0) splashStrike(); }
-
-function renderStrikes() {
-  for(let i=1;i<=3;i++) {
-    const a=document.getElementById(`s${i}`), b=document.getElementById(`hs${i}`);
-    const cls = i<=G.strikes ? ' lit' : '';
-    if(a) a.className='strike-dot'+cls;
-    if(b) b.className='strike-sm'+cls;
+function addStrike(){ if(G.strikes>=3) return; G.strikes++; renderStrikes(); splashStrike(); broadcastState(); }
+function setStrikeCount(n){ G.strikes=Math.min(Math.max(n,0),3); renderStrikes(); if(n>0) splashStrike(); broadcastState(); }
+function renderStrikes(){
+  for(let i=1;i<=3;i++){
+    const a=document.getElementById(`s${i}`),b=document.getElementById(`hs${i}`);
+    if(a) a.className='strike-dot'+(i<=G.strikes?' lit':'');
+    if(b) b.className='strike-sm'+(i<=G.strikes?' lit':'');
   }
 }
-
-function splashStrike() {
-  const sp = document.getElementById('strike-splash');
-  sp.classList.add('show');
-  setTimeout(()=>sp.classList.remove('show'), 650);
-}
+function splashStrike(){ const sp=document.getElementById('strike-splash'); sp.classList.add('show'); setTimeout(()=>sp.classList.remove('show'),650); }
 
 // ═══════════════════════════════════════════════════════════
 // SCORING
 // ═══════════════════════════════════════════════════════════
-function awardTeam(t) {
-  if (G.bank===0) { setFeedback('Nothing in the bank!','color:#facc15'); return; }
-  const pts = G.bank;
-  if (t===1) { G.t1Score+=pts; animScore('t1-score'); }
-  else       { G.t2Score+=pts; animScore('t2-score'); }
+function awardTeam(t){
+  if(G.bank===0){ setFeedback('Nothing in the bank!','color:#facc15'); return; }
+  const pts=G.bank;
+  if(t===1){G.t1Score+=pts;animScore('t1-score');}else{G.t2Score+=pts;animScore('t2-score');}
   G.bank=0; updateBank(); updateScores();
-  setFeedback(`+${pts} → ${t===1?G.t1Name:G.t2Name}!`, 'color:#ffd700');
+  setFeedback(`+${pts} → ${t===1?G.t1Name:G.t2Name}!`,'color:#ffd700');
+  broadcastState();
 }
-
-function discardBank() { G.bank=0; updateBank(); setFeedback('Points discarded.','color:#6b7280'); }
-
-function updateBank() {
-  const bv=document.getElementById('bank-val'); if(bv) bv.textContent=G.bank;
-  const hb=document.getElementById('hp-bank-val'); if(hb) hb.textContent=G.bank;
-}
-
-function updateScores() {
-  document.getElementById('t1-score').textContent=G.t1Score;
-  document.getElementById('t2-score').textContent=G.t2Score;
-}
-
-function animScore(id) {
-  const el=document.getElementById(id);
-  el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse');
-}
+function discardBank(){ G.bank=0; updateBank(); setFeedback('Points discarded.','color:#6b7280'); broadcastState(); }
+function updateBank(){ const bv=document.getElementById('bank-val'); if(bv) bv.textContent=G.bank; const hb=document.getElementById('hp-bank-val'); if(hb) hb.textContent=G.bank; }
+function updateScores(){ document.getElementById('t1-score').textContent=G.t1Score; document.getElementById('t2-score').textContent=G.t2Score; }
+function animScore(id){ const el=document.getElementById(id); el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse'); }
 
 // ═══════════════════════════════════════════════════════════
 // FEEDBACK
 // ═══════════════════════════════════════════════════════════
 let _fbt=null;
-function setFeedback(msg,style) {
-  const el=document.getElementById('feedback');
-  if(!el) return;
-  el.textContent=msg; el.setAttribute('style',style);
-  clearTimeout(_fbt);
-  if(msg) _fbt=setTimeout(()=>{ el.textContent=''; },3000);
-}
+function setFeedback(msg,style){ const el=document.getElementById('feedback'); if(!el) return; el.textContent=msg; el.setAttribute('style',style); clearTimeout(_fbt); if(msg) _fbt=setTimeout(()=>{el.textContent='';},3000); }
 
 // ═══════════════════════════════════════════════════════════
 // NAVIGATION
 // ═══════════════════════════════════════════════════════════
-function prevQ() { loadQ(G.curQ-1); }
-function nextQ() { loadQ(G.curQ+1); }
-function revealAll() {
-  QUESTIONS[G.curQ].answers.forEach((_,i)=>{
-    if(!G.revealed[i]) setTimeout(()=>revealCard(i,false), i*200);
-  });
-}
+function prevQ(){ loadQ(G.curQ-1); }
+function nextQ(){ loadQ(G.curQ+1); }
+function revealAll(){ QUESTIONS[G.curQ].answers.forEach((_,i)=>{ if(!G.revealed[i]) setTimeout(()=>revealCard(i,false),i*200); }); }
 
 // ═══════════════════════════════════════════════════════════
 // HOST PANEL TOGGLE
 // ═══════════════════════════════════════════════════════════
-function toggleHostPanel() {
-  hostPanelVisible = !hostPanelVisible;
-  const panel = document.getElementById('host-panel');
-  const bar   = document.getElementById('host-bar');
-  const btn   = document.getElementById('host-toggle-btn');
-  if (hostPanelVisible) {
-    panel.classList.remove('hp-hidden');
-    bar.style.display = 'none';
-    if(btn) btn.textContent = '◀ Hide Host';
-  } else {
-    panel.classList.add('hp-hidden');
-    bar.style.display = 'block';
-    if(btn) btn.textContent = '▶ Host Panel';
-  }
+function toggleHostPanel(){
+  hostPanelVisible=!hostPanelVisible;
+  const panel=document.getElementById('host-panel'), bar=document.getElementById('host-bar'), btn=document.getElementById('host-toggle-btn');
+  if(hostPanelVisible){ panel.classList.remove('hp-hidden'); bar.style.display='none'; if(btn) btn.textContent='◀ Hide Host'; }
+  else{ panel.classList.add('hp-hidden'); bar.style.display='block'; if(btn) btn.textContent='▶ Host Panel'; }
+}
+
+// ═══════════════════════════════════════════════════════════
+// OPEN DISPLAY WINDOW
+// ═══════════════════════════════════════════════════════════
+function openDisplayWindow(){
+  const url=location.href.split('?')[0]+'?display';
+  const w=window.open(url,'feud-display','width=1280,height=720,menubar=no,toolbar=no,location=no');
+  if(!w) alert('Pop-up blocked! Allow pop-ups for this page, then try again.');
 }
 
 // ═══════════════════════════════════════════════════════════
 // RESET / WINNER
 // ═══════════════════════════════════════════════════════════
-function openResetModal()  { document.getElementById('reset-modal').classList.remove('hidden'); }
-function closeResetModal() { document.getElementById('reset-modal').classList.add('hidden'); }
-function confirmReset() {
-  closeResetModal();
-  document.getElementById('winner-modal').classList.add('hidden');
+function openResetModal(){ document.getElementById('reset-modal').classList.remove('hidden'); }
+function closeResetModal(){ document.getElementById('reset-modal').classList.add('hidden'); }
+function confirmReset(){
+  closeResetModal(); document.getElementById('winner-modal').classList.add('hidden');
   G.t1Score=0; G.t2Score=0; updateScores(); loadQ(0);
 }
-
-function showWinner() {
-  const s1=G.t1Score, s2=G.t2Score;
-  document.getElementById('winner-text').textContent =
-    s1>s2 ? `${G.t1Name} wins with ${s1} points! 🏆` :
-    s2>s1 ? `${G.t2Name} wins with ${s2} points! 🏆` :
-    `Tie game — both teams at ${s1} pts. Rematch required. ⚔️`;
+function showWinner(){
+  const s1=G.t1Score,s2=G.t2Score;
+  document.getElementById('winner-text').textContent=s1>s2?`${G.t1Name} wins with ${s1} points! 🏆`:s2>s1?`${G.t2Name} wins with ${s2} points! 🏆`:`Tie — both at ${s1} pts. Rematch required. ⚔️`;
   document.getElementById('winner-modal').classList.remove('hidden');
 }
 
@@ -717,6 +746,25 @@ function showWinner() {
 // BOOT
 // ═══════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
+  if (IS_DISPLAY) {
+    // ── DISPLAY MODE: clean audience window ──
+    document.getElementById('setup-modal').classList.add('hidden');
+    document.getElementById('game').classList.remove('hidden');
+    document.getElementById('host-panel').classList.add('hp-hidden');
+    document.getElementById('host-bar').style.display = 'none';
+    document.getElementById('host-header-btns').style.display = 'none';
+    document.body.style.overflow = 'hidden';
+
+    // Show waiting overlay
+    const w = document.getElementById('display-waiting');
+    if (w) w.style.display = 'flex';
+
+    // Ask host for current state (in case game already started)
+    if (CHANNEL) setTimeout(()=>CHANNEL.postMessage({type:'REQUEST_STATE'}), 200);
+    return;
+  }
+
+  // ── HOST MODE ──
   ['inp-t1','inp-t2'].forEach(id=>{
     document.getElementById(id).addEventListener('keydown', e=>{ if(e.key==='Enter') startGame(); });
   });
