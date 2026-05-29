@@ -1,3 +1,6 @@
+Here is the complete file. Copy everything inside the code fence, save as `family-feud.html`, and open it directly.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -126,10 +129,7 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
 <!-- STRIKE SPLASH -->
 <div id="strike-splash"><div id="strike-splash-x">✗</div></div>
 
-<!-- ═══════════════════════════════════════
-     SCREEN 1: MODE SELECT
-     (shown on fresh open, not for ?display)
-════════════════════════════════════════ -->
+<!-- MODE SELECT -->
 <div id="mode-select" class="fullscreen-card" style="display:none">
   <div>
     <h1 class="neon-gold font-black tracking-widest text-center" style="font-size:2.8rem">FAMILY FEUD</h1>
@@ -149,10 +149,7 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
   <p class="text-gray-700 text-center" style="font-size:.65rem;max-width:360px">Both devices need this HTML file saved locally. Host generates a room code; display device enters it to connect.</p>
 </div>
 
-<!-- ═══════════════════════════════════════
-     SCREEN 2: DISPLAY CONNECT
-     (display device enters room code)
-════════════════════════════════════════ -->
+<!-- DISPLAY CONNECT -->
 <div id="display-connect" class="fullscreen-card" style="display:none">
   <div>
     <h1 class="neon-gold font-black tracking-widest text-center" style="font-size:2.2rem">FAMILY FEUD</h1>
@@ -169,15 +166,11 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
   <button class="btn btn-gray" style="font-size:.65rem;margin-top:.5rem" onclick="showModeSelect()">← Back</button>
 </div>
 
-<!-- ═══════════════════════════════════════
-     SETUP MODAL (admin/host)
-════════════════════════════════════════ -->
+<!-- SETUP MODAL -->
 <div id="setup-modal" class="modal-bg" style="display:none">
   <div class="modal-card">
     <h1 class="neon-gold text-center font-black tracking-widest mb-0" style="font-size:2.1rem">FAMILY FEUD</h1>
     <p class="text-center text-purple-300 tracking-widest mb-4" style="font-size:.72rem">★ AFTER DARK — COLLEGE EDITION ★</p>
-
-    <!-- Room Code (cross-device) -->
     <div class="mb-4 text-center" style="background:rgba(255,215,0,.05);border:1px solid rgba(255,215,0,.2);border-radius:12px;padding:.75rem">
       <div class="hp-lbl" style="margin-bottom:4px">Your Room Code — share with display device</div>
       <div id="setup-room-code" class="room-code-big">------</div>
@@ -185,7 +178,6 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
         <span class="conn-dot waiting"></span>Initializing…
       </div>
     </div>
-
     <div class="space-y-3 mb-5">
       <div><div class="field-label">Team 1 Name</div><input id="inp-t1" class="field-input" type="text" placeholder="e.g. The Chaos Gremlins" maxlength="22"/></div>
       <div><div class="field-label">Team 2 Name</div><input id="inp-t2" class="field-input" type="text" placeholder="e.g. Disaster Adults" maxlength="22"/></div>
@@ -218,9 +210,7 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════
-     MAIN GAME
-════════════════════════════════════════ -->
+<!-- MAIN GAME -->
 <div id="game" class="hidden">
   <div id="game-header">
     <div class="flex items-center justify-between gap-3">
@@ -240,10 +230,8 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
   </div>
 
   <div id="game-body">
-
     <!-- PLAYER BOARD -->
     <div id="player-board">
-      <!-- Waiting overlay (display mode) -->
       <div id="display-waiting" style="display:none;position:absolute;inset:0;z-index:10;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:radial-gradient(ellipse at top,#0d0d3b 0%,#07071a 60%)">
         <div class="neon-gold font-black tracking-widest" style="font-size:2.5rem">FAMILY FEUD</div>
         <div class="text-purple-300" style="font-size:.85rem;letter-spacing:.15em">AFTER DARK · COLLEGE EDITION</div>
@@ -292,7 +280,6 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
         </div>
       </div>
 
-      <!-- Room code + connection status -->
       <div class="hp-sec" style="flex-shrink:0">
         <div class="hp-lbl">Cross-Device Room Code</div>
         <div class="flex items-center justify-between">
@@ -304,19 +291,16 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
         <div style="font-size:.6rem;color:#6b7280;margin-top:2px">Other device: open file → Display → enter code above</div>
       </div>
 
-      <!-- Q info -->
       <div class="hp-sec" style="flex-shrink:0">
-        <div class="hp-lbl">Question &nbsp;<span id="hp-q-num" class="text-amber-400" style="font-size:.65rem">Q1/40</span></div>
+        <div class="hp-lbl">Question &nbsp;<span id="hp-q-num" class="text-amber-400" style="font-size:.65rem">Q1/48</span></div>
         <div id="hp-q-text" class="text-gray-300 leading-snug" style="font-size:.78rem">&nbsp;</div>
       </div>
 
-      <!-- Cheat sheet -->
       <div class="hp-sec" style="flex:1;min-height:0;overflow-y:auto">
         <div class="hp-lbl">Answer Cheat Sheet <span class="text-gray-700 ml-1" style="font-size:.52rem">(host only)</span></div>
         <div id="cheat-answers"></div>
       </div>
 
-      <!-- Guess input -->
       <div class="hp-sec" style="flex-shrink:0">
         <div class="hp-lbl">Guess Input</div>
         <div class="flex gap-2 mb-1">
@@ -326,7 +310,6 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
         <div id="feedback" class="text-center font-bold" style="min-height:1.1rem;font-size:.8rem"></div>
       </div>
 
-      <!-- Strike controls -->
       <div class="hp-sec" style="flex-shrink:0">
         <div class="hp-lbl">Strikes</div>
         <div class="flex items-center gap-2 mb-2">
@@ -343,7 +326,6 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
         </div>
       </div>
 
-      <!-- Award -->
       <div class="hp-sec" style="flex-shrink:0">
         <div class="hp-lbl">Award Bank &nbsp;<span id="hp-bank-val" class="text-purple-300 font-bold">0</span> pts</div>
         <div class="flex gap-1">
@@ -353,7 +335,6 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
         </div>
       </div>
 
-      <!-- Navigation -->
       <div class="hp-sec" style="flex-shrink:0">
         <div class="hp-lbl">Navigation</div>
         <div class="flex gap-1">
@@ -363,11 +344,10 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
-<!-- HOST BAR (when panel hidden) -->
+<!-- HOST BAR (panel hidden) -->
 <div id="host-bar">
   <div class="flex gap-2 items-center max-w-3xl mx-auto">
     <span class="text-orange-400 font-bold" style="font-size:.62rem;white-space:nowrap">HOST ▷</span>
@@ -381,49 +361,34 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════════
-// ROLES & URL
-// ═══════════════════════════════════════════════════════════
-const URL_PARAMS   = new URLSearchParams(location.search);
-const IS_DISPLAY   = URL_PARAMS.has('display');
-const AUTO_ROOM    = (URL_PARAMS.get('room') || '').toUpperCase();
-// IS_ADMIN is the inverse — set when user picks admin role or no ?display
+const URL_PARAMS = new URLSearchParams(location.search);
+const IS_DISPLAY = URL_PARAMS.has('display');
+const AUTO_ROOM  = (URL_PARAMS.get('room') || '').toUpperCase();
 let IS_ADMIN = !IS_DISPLAY;
 
-// ═══════════════════════════════════════════════════════════
-// PEER.JS — cross-device sync
-// ═══════════════════════════════════════════════════════════
-const PEER_NS  = 'ffgame-'; // namespace prefix for PeerJS IDs
-let myPeer     = null;
-let peerConns  = [];        // admin: array of DataConnections to displays
-let adminConn  = null;      // display: single DataConnection to admin
-let ROOM_CODE  = '';
+const PEER_NS = 'ffgame-';
+let myPeer    = null;
+let peerConns = [];
+let adminConn = null;
+let ROOM_CODE = '';
 
 function genCode() {
-  // 6 uppercase letters, no I/O to avoid confusion
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
   return Array.from({length:6}, ()=>chars[Math.floor(Math.random()*chars.length)]).join('');
 }
 
-// ── ADMIN: create peer, receive display connections ──
 function initAdminPeer() {
   ROOM_CODE = genCode();
   setRoomCodeUI(ROOM_CODE, 'waiting', 'Waiting for display to connect…');
-
   myPeer = new Peer(PEER_NS + ROOM_CODE.toLowerCase(), {
     debug: 0,
     config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] }
   });
-
-  myPeer.on('open', () => {
-    setRoomCodeUI(ROOM_CODE, 'waiting', 'Waiting for display to connect…');
-  });
-
+  myPeer.on('open', () => { setRoomCodeUI(ROOM_CODE, 'waiting', 'Waiting for display to connect…'); });
   myPeer.on('connection', conn => {
     conn.on('open', () => {
       peerConns.push(conn);
       setRoomCodeUI(ROOM_CODE, 'ok', `Display connected (${peerConns.length})`);
-      // Send current state to newly connected display
       conn.send({ type:'STATE', G: snapshot() });
     });
     conn.on('close', () => {
@@ -433,46 +398,30 @@ function initAdminPeer() {
     });
     conn.on('error', e => console.warn('peer conn error', e));
   });
-
   myPeer.on('error', err => {
-    if (err.type === 'unavailable-id') {
-      // Collision — try a new code
-      myPeer.destroy();
-      initAdminPeer();
-    } else {
-      setRoomCodeUI(ROOM_CODE, 'err', 'Peer error — same-device mode still works');
-    }
+    if (err.type === 'unavailable-id') { myPeer.destroy(); initAdminPeer(); }
+    else setRoomCodeUI(ROOM_CODE, 'err', 'Peer error — same-device mode still works');
   });
 }
 
-// ── DISPLAY: connect to admin using room code ──
 function connectDisplay(code) {
   const peerId = PEER_NS + code.toLowerCase();
   setDispConnStatus('⏳ Connecting…', '#fbbf24');
-
   if (myPeer) myPeer.destroy();
   myPeer = new Peer({ debug: 0, config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] } });
-
   myPeer.on('open', () => {
     adminConn = myPeer.connect(peerId, { reliable: true });
-    adminConn.on('open', () => {
-      setDispConnStatus('✅ Connected! Waiting for host to start…', '#4ade80');
-      showDisplayGame();
-    });
-    adminConn.on('data', ({ type, G: remoteG }) => {
-      if (type === 'STATE') applyRemoteState(remoteG);
-    });
+    adminConn.on('open', () => { setDispConnStatus('✅ Connected! Waiting for host to start…', '#4ade80'); showDisplayGame(); });
+    adminConn.on('data', ({ type, G: remoteG }) => { if (type === 'STATE') applyRemoteState(remoteG); });
     adminConn.on('close', () => showDispOverlay('❌ Host disconnected. Refresh to reconnect.'));
     adminConn.on('error', e => setDispConnStatus(`❌ ${e}`, '#f87171'));
   });
-
   myPeer.on('error', err => {
     if (err.type === 'peer-unavailable') setDispConnStatus('❌ Room code not found. Check and try again.', '#f87171');
     else setDispConnStatus(`❌ Error: ${err.message}`, '#f87171');
   });
 }
 
-// ── BROADCAST to all peers + same-device BroadcastChannel ──
 const BC = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('ffgame-v3') : null;
 if (BC) BC.onmessage = ({ data }) => {
   if (data.type === 'STATE' && IS_DISPLAY) applyRemoteState(data.G);
@@ -482,166 +431,158 @@ if (BC) BC.onmessage = ({ data }) => {
 function broadcastState() {
   if (!IS_ADMIN) return;
   const s = { type:'STATE', G: snapshot() };
-  // Same-device
   if (BC) BC.postMessage(s);
-  // Cross-device
   peerConns.forEach(c => { if (c.open) c.send(s); });
 }
 
 function snapshot() { return JSON.parse(JSON.stringify(G)); }
 
-// ─────────────────────────────────────────────────────────
-// UI HELPERS
-// ─────────────────────────────────────────────────────────
 function setRoomCodeUI(code, dotClass, txt) {
-  const el1 = document.getElementById('setup-room-code');
-  const el2 = document.getElementById('hp-room-code');
-  const st1 = document.getElementById('setup-peer-status');
-  const hp  = document.getElementById('hp-peer-status');
-  const ht  = document.getElementById('hp-peer-txt');
-  if (el1) el1.textContent = code;
-  if (el2) el2.textContent = code;
-  if (st1) st1.innerHTML = `<span class="conn-dot ${dotClass}"></span>${txt}`;
-  if (hp)  { hp.querySelector('.conn-dot').className = `conn-dot ${dotClass}`; }
-  if (ht)  ht.textContent = txt;
+  const el1=document.getElementById('setup-room-code'), el2=document.getElementById('hp-room-code');
+  const st1=document.getElementById('setup-peer-status'), hp=document.getElementById('hp-peer-status'), ht=document.getElementById('hp-peer-txt');
+  if(el1) el1.textContent=code; if(el2) el2.textContent=code;
+  if(st1) st1.innerHTML=`<span class="conn-dot ${dotClass}"></span>${txt}`;
+  if(hp) hp.querySelector('.conn-dot').className=`conn-dot ${dotClass}`;
+  if(ht) ht.textContent=txt;
 }
-
-function setDispConnStatus(msg, color) {
-  const el = document.getElementById('disp-connect-status');
-  if (el) { el.textContent = msg; el.style.color = color || '#6b7280'; }
-}
-
-function showDispOverlay(msg) {
-  const w = document.getElementById('display-waiting');
-  if (!w) return;
-  w.style.display = 'flex';
-  const m = document.getElementById('disp-wait-msg');
-  if (m) m.textContent = msg;
-}
-
-function showDisplayGame() {
-  document.getElementById('display-connect').style.display = 'none';
-  document.getElementById('game').classList.remove('hidden');
-  showDispOverlay('Connected — waiting for host to start…');
-}
-
-function showModeSelect() {
-  document.getElementById('display-connect').style.display = 'none';
-  document.getElementById('mode-select').style.display    = 'flex';
-}
-
+function setDispConnStatus(msg, color) { const el=document.getElementById('disp-connect-status'); if(el){ el.textContent=msg; el.style.color=color||'#6b7280'; } }
+function showDispOverlay(msg) { const w=document.getElementById('display-waiting'); if(!w) return; w.style.display='flex'; const m=document.getElementById('disp-wait-msg'); if(m) m.textContent=msg; }
+function showDisplayGame() { document.getElementById('display-connect').style.display='none'; document.getElementById('game').classList.remove('hidden'); showDispOverlay('Connected — waiting for host to start…'); }
+function showModeSelect() { document.getElementById('display-connect').style.display='none'; document.getElementById('mode-select').style.display='flex'; }
 function selectRole(role) {
-  document.getElementById('mode-select').style.display = 'none';
-  if (role === 'admin') {
-    IS_ADMIN = true;
-    initAdminPeer();
-    document.getElementById('setup-modal').style.display = 'flex';
-  } else {
-    IS_ADMIN = false;
-    document.getElementById('display-connect').style.display = 'flex';
-  }
+  document.getElementById('mode-select').style.display='none';
+  if(role==='admin'){ IS_ADMIN=true; initAdminPeer(); document.getElementById('setup-modal').style.display='flex'; }
+  else { IS_ADMIN=false; document.getElementById('display-connect').style.display='flex'; }
 }
-
 function connectDisplay_btn() {
-  const code = (document.getElementById('room-code-inp').value || '').trim().toUpperCase();
-  if (code.length < 6) { setDispConnStatus('Enter a 6-letter room code', '#f87171'); return; }
+  const code=(document.getElementById('room-code-inp').value||'').trim().toUpperCase();
+  if(code.length<6){ setDispConnStatus('Enter a 6-letter room code','#f87171'); return; }
   connectDisplay(code);
 }
 
 // ═══════════════════════════════════════════════════════════
-// QUESTIONS (48: 15 classic + 33 college)
+// QUESTIONS — 48 total (15 classic + 33 college)
 // ═══════════════════════════════════════════════════════════
 const QUESTIONS = [
+
   // ── CLASSIC (15) ──────────────────────────────────────────
   {cat:'classic',q:"Name something your therapist has probably said about your family.",answers:[
     {t:"Deeply traumatic",p:34},{t:"Boundary issues",p:24},{t:"Enabler behavior",p:17},
     {t:"Need more sessions",p:12},{t:"Your mother",p:8},{t:"Try journaling",p:5}]},
+
   {cat:'classic',q:"We asked 100 divorced people: What's the ONE thing you don't miss?",answers:[
     {t:"The in-laws",p:38},{t:"Sharing the remote",p:22},{t:"Being questioned",p:16},
     {t:"Their cooking",p:11},{t:"Their friends",p:8},{t:"Coordinating trips",p:5}]},
+
   {cat:'classic',q:"Name a reason a normal person might fake their own death.",answers:[
     {t:"Student loans",p:40},{t:"Family reunion",p:25},{t:"Terrible job",p:15},
     {t:"Toxic ex",p:10},{t:"Group chat",p:7},{t:"Their own wedding",p:3}]},
+
   {cat:'classic',q:"Name something people absolutely lie about on their dating profile.",answers:[
     {t:"Height",p:36},{t:"Age",p:28},{t:"Their job",p:18},
     {t:"Old photos",p:11},{t:"Loving outdoors",p:5},{t:"Being laid back",p:2}]},
+
   {cat:'classic',q:"Name something you do at 2 AM that you'd be embarrassed to admit.",answers:[
     {t:"Doom-scrolling",p:32},{t:"Stress eating",p:24},{t:"Stalking an ex",p:19},
     {t:"Regret shopping",p:13},{t:"Crying",p:8},{t:"Reality TV",p:4}]},
+
   {cat:'classic',q:"Name something you'd do at a wedding when you secretly hate the couple.",answers:[
     {t:"Drink heavily",p:37},{t:"Bet on divorce",p:26},{t:"Avoid eye contact",p:16},
     {t:"Leave early",p:12},{t:"Bad gift",p:6},{t:"Ruin the playlist",p:3}]},
+
   {cat:'classic',q:"Name a phrase that sounds motivational but is actually terrible advice.",answers:[
     {t:"Follow your passion",p:38},{t:"Quit and travel",p:27},{t:"YOLO",p:17},
     {t:"Everything happens for a reason",p:11},{t:"Just be yourself",p:5},{t:"Money can't buy happiness",p:2}]},
+
   {cat:'classic',q:"Name something people pretend to understand but absolutely don't.",answers:[
     {t:"The stock market",p:35},{t:"Wine tasting",p:24},{t:"Modern art",p:18},
     {t:"Their car engine",p:12},{t:"Cricket",p:7},{t:"Their insurance",p:4}]},
+
   {cat:'classic',q:"Name something that would immediately ruin a first date.",answers:[
     {t:"Talking about the ex",p:36},{t:"Showing up with parents",p:28},{t:"Staring at your phone",p:16},
     {t:"Mentioning marriage",p:11},{t:"Dine-and-dash",p:6},{t:"Unprovoked rant",p:3}]},
+
   {cat:'classic',q:"Name something people say at a funeral that they probably shouldn't.",answers:[
     {t:"Better place now",p:33},{t:"Suffering is over",p:24},{t:"Who gets the house?",p:18},
     {t:"Never liked him",p:13},{t:"Who's hungry?",p:8},{t:"Great networking",p:4}]},
+
   {cat:'classic',q:"Name something a time traveler from 1990 would be most unprepared for today.",answers:[
     {t:"Subscription fees",p:35},{t:"Everyone on phones",p:25},{t:"Influencers",p:18},
     {t:"$22 toast",p:12},{t:"Getting canceled",p:7},{t:"No indoor smoking",p:3}]},
+
   {cat:'classic',q:"Name something your GPS would say if it had feelings about your driving.",answers:[
     {t:"I said turn left",p:37},{t:"Recalculating again",p:27},{t:"Why are you here?",p:17},
     {t:"You passed it again",p:11},{t:"Bold choice",p:6},{t:"I quit",p:2}]},
+
   {cat:'classic',q:"Name something technically legal that absolutely should be a crime.",answers:[
     {t:"Loud chewing",p:35},{t:"Reclining your seat",p:27},{t:"Ghosting",p:18},
     {t:"Autoplay sound",p:11},{t:"Replying 'K'",p:6},{t:"Movie spoilers",p:3}]},
+
   {cat:'classic',q:"Name something your phone's AI knows about you that it should keep secret.",answers:[
     {t:"Midnight searches",p:38},{t:"Embarrassing selfies",p:24},{t:"Sad song count",p:17},
     {t:"Angry drafts",p:12},{t:"Ignored mom",p:6},{t:"Location history",p:3}]},
+
   {cat:'classic',q:"Name a sign that your life is basically a reality TV show.",answers:[
     {t:"Works when watched",p:34},{t:"Dramatic exits",p:26},{t:"Friends are cast",p:18},
     {t:"Bathroom confessional",p:12},{t:"Checking ratings",p:7},{t:"Rose ceremony",p:3}]},
 
-  // ── COLLEGE — ORIGINAL KEPT (15) ─────────────────────────
+  // ── COLLEGE — ORIGINAL (15) ───────────────────────────────
   {cat:'college',q:"Name something college students blame their low GPA on.",answers:[
     {t:"The professor",p:35},{t:"Mental health",p:25},{t:"Working three jobs",p:18},
     {t:"Social life",p:12},{t:"The pandemic",p:7},{t:"Mercury retrograde",p:3}]},
+
   {cat:'college',q:"Name the worst place to wake up after a campus party.",answers:[
     {t:"Library floor",p:34},{t:"Professor's yard",p:26},{t:"Wrong dorm",p:18},
     {t:"Campus chapel",p:12},{t:"Dining hall",p:7},{t:"Ex's hallway",p:3}]},
+
   {cat:'college',q:"What does a completely broke college student eat for dinner?",answers:[
     {t:"Instant ramen",p:40},{t:"Stolen dining hall food",p:26},{t:"Gas station hot dog",p:16},
     {t:"Condiment packets",p:9},{t:"Roommate's food",p:6},{t:"Nothing",p:3}]},
+
   {cat:'college',q:"Name something you quickly hide when your professor walks past your laptop.",answers:[
     {t:"Netflix",p:38},{t:"Online shopping",p:25},{t:"Dating app",p:17},
     {t:"Someone else's essay",p:12},{t:"Meme group chat",p:5},{t:"Job application",p:3}]},
+
   {cat:'college',q:"Name something in a dorm room that would absolutely horrify a parent.",answers:[
     {t:"Empty bottles",p:35},{t:"Biological smell",p:25},{t:"Old dishes",p:18},
     {t:"Stranger in the bed",p:12},{t:"The GPA",p:7},{t:"Ramen evidence",p:3}]},
+
   {cat:'college',q:"Name a lie college students confidently put on their resume.",answers:[
     {t:"Excel proficient",p:36},{t:"Leadership skills",p:27},{t:"Fluent in Spanish",p:17},
     {t:"3+ years experience",p:11},{t:"References available",p:6},{t:"Team player",p:3}]},
+
   {cat:'college',q:"Name what students do in the 10 minutes before a final exam.",answers:[
     {t:"Panic cram",p:35},{t:"Full meltdown",p:27},{t:"Ask about a curve",p:17},
     {t:"Text mom",p:11},{t:"Accept failure",p:7},{t:"Find religion",p:3}]},
+
   {cat:'college',q:"Name a reason a college student emails their professor at 2 AM.",answers:[
-    {t:"Extension request",p:38},{t:"Misread the due date",p:26},{t:"Grandma died again",p:17},
+    {t:"Extension request",p:38},{t:"Misread due date",p:26},{t:"Grandma died again",p:17},
     {t:"Disputing 0.5 points",p:11},{t:"Deep revelation",p:5},{t:"Accidental Reply All",p:3}]},
+
   {cat:'college',q:"Name a reason someone drops their major junior year.",answers:[
     {t:"Hate the field",p:34},{t:"Job market terror",p:26},{t:"One-star professor",p:18},
     {t:"Followed a crush",p:12},{t:"TikTok said to",p:7},{t:"Couldn't pass one class",p:3}]},
+
   {cat:'college',q:"Name what students tell their parents student loan money goes toward.",answers:[
     {t:"Books",p:37},{t:"Groceries",p:27},{t:"School supplies",p:17},
     {t:"Professional events",p:11},{t:"Transportation",p:5},{t:"Tuition (ironic)",p:3}]},
+
   {cat:'college',q:"Name a place on campus where students go to cry privately.",answers:[
     {t:"Bathroom stall",p:38},{t:"Back of the library",p:26},{t:"Parked car",p:18},
     {t:"Counseling waiting room",p:11},{t:"Behind the auditorium",p:4},{t:"Openly in the quad",p:3}]},
+
   {cat:'college',q:"Name something a hungover student says during an 8 AM class.",answers:[
     {t:"Turn off the lights",p:35},{t:"Is this on the exam?",p:25},{t:"Just really tired",p:19},
     {t:"Do you have water?",p:12},{t:"I think I'm sick",p:6},{t:"Head on desk",p:3}]},
+
   {cat:'college',q:"Name something a college student does instead of attending class.",answers:[
     {t:"Sleep",p:36},{t:"Watch Netflix",p:24},{t:"Copy someone's notes",p:18},
     {t:"Vague excuse email",p:12},{t:"Study something else",p:7},{t:"Extended brunch",p:3}]},
+
   {cat:'college',q:"Name the worst thing about sharing a college dorm bathroom.",answers:[
     {t:"Hair everywhere",p:36},{t:"3 AM shower noise",p:25},{t:"No hot water",p:18},
     {t:"Permanent smell",p:13},{t:"45-minute showers",p:5},{t:"Mandatory flip-flops",p:3}]},
+
   {cat:'college',q:"Name something a college student brags about that's actually embarrassing.",answers:[
     {t:"Only slept 2 hours",p:35},{t:"Haven't been to class",p:26},{t:"Live on energy drinks",p:18},
     {t:"Essay in one night",p:12},{t:"Keg stand",p:6},{t:"Never cooked",p:3}]},
@@ -650,54 +591,71 @@ const QUESTIONS = [
   {cat:'college',q:"Besides studying, why is a college student up at 4 AM?",answers:[
     {t:"Scrolling TikTok",p:35},{t:"Existential dread",p:25},{t:"Partying",p:18},
     {t:"Crying",p:12},{t:"Gaming",p:10}]},
+
   {cat:'college',q:"Name something you pray your professor doesn't look at during a presentation.",answers:[
     {t:"Search history",p:40},{t:"My notes",p:22},{t:"My face",p:15},
     {t:"Open tabs",p:13},{t:"ChatGPT",p:10}]},
+
   {cat:'college',q:"What's the fastest way to ruin a group project?",answers:[
     {t:"Ghost the group",p:45},{t:"Do zero work",p:25},{t:"Bad ideas",p:15},
     {t:"Plagiarize",p:10},{t:"Miss the deadline",p:5}]},
+
   {cat:'college',q:"Name a terrible meal a broke student considers a luxury.",answers:[
     {t:"Instant ramen",p:38},{t:"Fast food",p:28},{t:"Cereal",p:16},
     {t:"Leftover pizza",p:12},{t:"Ice water",p:6}]},
+
   {cat:'college',q:"What's a major red flag on a student's nightstand?",answers:[
     {t:"Empty vapes",p:35},{t:"Moldy cups",p:28},{t:"Unopened textbooks",p:18},
     {t:"Antidepressants",p:12},{t:"Crusty towel",p:7}]},
+
   {cat:'college',q:"Name something a college student uses as a personality trait.",answers:[
     {t:"Caffeine addiction",p:32},{t:"Their major",p:26},{t:"Sleep deprivation",p:20},
     {t:"Being broke",p:14},{t:"Trauma",p:8}]},
+
   {cat:'college',q:"Name something students do right before a deadline they've had for a month.",answers:[
     {t:"Panic study",p:38},{t:"Pray",p:22},{t:"Finally start",p:20},
     {t:"Make excuses",p:12},{t:"Give up",p:8}]},
+
   {cat:'college',q:"Name a reason a student is broke 3 days after payday.",answers:[
     {t:"Food delivery",p:35},{t:"Going out",p:28},{t:"Online shopping",p:20},
     {t:"Ubers",p:12},{t:"Subscriptions",p:5}]},
+
   {cat:'college',q:"Name what a college student actually does during 'study time'.",answers:[
     {t:"Scrolling phone",p:38},{t:"Napping",p:26},{t:"Snacking",p:18},
     {t:"Watching Netflix",p:12},{t:"Chatting",p:6}]},
+
   {cat:'college',q:"Name something students say right before making a terrible decision.",answers:[
     {t:"It'll be fine",p:38},{t:"YOLO",p:28},{t:"Just this once",p:18},
     {t:"Hold my drink",p:10},{t:"Last time",p:6}]},
+
   {cat:'college',q:"Name a 'study technique' that involves zero actual studying.",answers:[
     {t:"Color-coding notes",p:35},{t:"Making playlists",p:25},{t:"Organizing the desk",p:20},
     {t:"Watch summaries",p:14},{t:"Re-reading nothing",p:6}]},
+
   {cat:'college',q:"Name something a student blames when they fail a test.",answers:[
     {t:"The professor",p:40},{t:"Not enough sleep",p:28},{t:"Bad luck",p:16},
     {t:"Too stressed",p:10},{t:"The curve",p:6}]},
+
   {cat:'college',q:"Name what college students use instead of cooking.",answers:[
     {t:"Microwave",p:38},{t:"DoorDash",p:28},{t:"Dining hall",p:18},
     {t:"Roommate's food",p:10},{t:"Skip eating",p:6}]},
+
   {cat:'college',q:"Name a sign you pulled an all-nighter before class.",answers:[
     {t:"Yesterday's clothes",p:35},{t:"Hollow eyes",p:25},{t:"Fifth coffee",p:20},
     {t:"Can't form sentences",p:12},{t:"Randomly crying",p:8}]},
+
   {cat:'college',q:"Name something students ask classmates for right before an exam.",answers:[
     {t:"Notes",p:40},{t:"The answers",p:30},{t:"A pencil",p:16},
     {t:"Emotional support",p:9},{t:"A prayer",p:5}]},
+
   {cat:'college',q:"Name a moment that makes a student consider dropping out.",answers:[
     {t:"Finals week",p:38},{t:"Seeing tuition bill",p:26},{t:"A group project",p:18},
     {t:"An 8 AM class",p:12},{t:"Career fair",p:6}]},
+
   {cat:'college',q:"Name something a student does in lecture instead of listening.",answers:[
     {t:"Texting",p:38},{t:"Online shopping",p:26},{t:"Sleeping",p:20},
     {t:"Drawing",p:10},{t:"Eating",p:6}]},
+
   {cat:'college',q:"Name the most chaotic place a student has slept.",answers:[
     {t:"Their car",p:35},{t:"The library",p:28},{t:"Stranger's couch",p:18},
     {t:"Bathroom floor",p:12},{t:"During class",p:7}]},
@@ -717,10 +675,8 @@ function applyRemoteState(newG) {
   const prevRev = G.revealed ? [...G.revealed] : [];
   const prevStr = G.strikes;
   const newQ    = newG.curQ !== prevQ || newG.revealed.length !== prevRev.length;
-
   const w = document.getElementById('display-waiting');
   if (w) w.style.display = 'none';
-
   if (newQ) {
     G = newG;
     document.getElementById('q-text').textContent  = QUESTIONS[G.curQ].q;
@@ -764,15 +720,15 @@ function abbr(n){ return n.length>10 ? n.slice(0,10)+'…' : n; }
 // LOAD QUESTION
 // ═══════════════════════════════════════════════════════════
 function loadQ(idx) {
-  if (idx<0 || idx>=QUESTIONS.length) return;
-  G.curQ=idx; G.strikes=0; G.bank=0;
+  if (idx < 0 || idx >= QUESTIONS.length) return;
+  G.curQ = idx; G.strikes = 0; G.bank = 0;
   G.revealed = new Array(QUESTIONS[idx].answers.length).fill(false);
-  document.getElementById('hdr-q').textContent = idx+1;
-  const ht=document.getElementById('hdr-total'); if(ht) ht.textContent=QUESTIONS.length;
+  document.getElementById('hdr-q').textContent = idx + 1;
+  const ht = document.getElementById('hdr-total'); if (ht) ht.textContent = QUESTIONS.length;
   document.getElementById('q-text').textContent = QUESTIONS[idx].q;
-  const gi=document.getElementById('guess-inp'), gb=document.getElementById('guess-inp-bar');
-  if(gi) gi.value=''; if(gb) gb.value='';
-  setFeedback('','');
+  const gi = document.getElementById('guess-inp'), gb = document.getElementById('guess-inp-bar');
+  if (gi) gi.value = ''; if (gb) gb.value = '';
+  setFeedback('', '');
   updateBank(); renderStrikes(); renderGrid(); updateCheatSheet();
   broadcastState();
 }
@@ -781,15 +737,15 @@ function loadQ(idx) {
 // RENDER GRID
 // ═══════════════════════════════════════════════════════════
 function renderGrid() {
-  const q=QUESTIONS[G.curQ], grid=document.getElementById('answer-grid'), n=q.answers.length;
-  const cols=n<=4?'grid-cols-2':n<=6?'grid-cols-2 sm:grid-cols-3':'grid-cols-2 sm:grid-cols-4';
-  grid.className=`grid gap-2 ${cols}`; grid.innerHTML='';
-  q.answers.forEach((ans,i)=>{
-    const div=document.createElement('div');
-    div.className=`card-wrap${G.revealed[i]?' flipped':''}`;
-    div.id=`card-${i}`; div.style.height='76px';
-    if(IS_ADMIN){ div.style.cursor='pointer'; div.onclick=()=>{ if(!G.revealed[i]) revealCard(i,true); }; }
-    div.innerHTML=`<div class="card-inner">
+  const q = QUESTIONS[G.curQ], grid = document.getElementById('answer-grid'), n = q.answers.length;
+  const cols = n<=4 ? 'grid-cols-2' : n<=6 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-2 sm:grid-cols-4';
+  grid.className = `grid gap-2 ${cols}`; grid.innerHTML = '';
+  q.answers.forEach((ans, i) => {
+    const div = document.createElement('div');
+    div.className = `card-wrap${G.revealed[i] ? ' flipped' : ''}`;
+    div.id = `card-${i}`; div.style.height = '76px';
+    if (IS_ADMIN) { div.style.cursor = 'pointer'; div.onclick = () => { if (!G.revealed[i]) revealCard(i, true); }; }
+    div.innerHTML = `<div class="card-inner">
       <div class="card-face card-front"><span style="font-size:1.7rem;font-weight:900;color:#ffd700">${i+1}</span></div>
       <div class="card-face card-back">
         <span style="font-size:clamp(.65rem,1.8vw,.9rem);font-weight:600;color:#e8e8ff;line-height:1.2">${ans.t}</span>
@@ -802,129 +758,139 @@ function renderGrid() {
 // ═══════════════════════════════════════════════════════════
 // REVEAL CARD
 // ═══════════════════════════════════════════════════════════
-function revealCard(i,addToBank){
-  if(G.revealed[i]) return;
-  G.revealed[i]=true;
-  const el=document.getElementById(`card-${i}`);
-  if(el){ el.classList.add('flipped'); setTimeout(()=>{ el.classList.add('reveal-flash'); setTimeout(()=>el.classList.remove('reveal-flash'),900); },300); }
-  if(addToBank){ G.bank+=QUESTIONS[G.curQ].answers[i].p; updateBank(); }
+function revealCard(i, addToBank) {
+  if (G.revealed[i]) return;
+  G.revealed[i] = true;
+  const el = document.getElementById(`card-${i}`);
+  if (el) { el.classList.add('flipped'); setTimeout(()=>{ el.classList.add('reveal-flash'); setTimeout(()=>el.classList.remove('reveal-flash'),900); },300); }
+  if (addToBank) { G.bank += QUESTIONS[G.curQ].answers[i].p; updateBank(); }
   updateCheatSheet(); broadcastState();
 }
 
 // ═══════════════════════════════════════════════════════════
 // CHEAT SHEET
 // ═══════════════════════════════════════════════════════════
-function updateCheatSheet(){
-  const q=QUESTIONS[G.curQ], $=id=>document.getElementById(id);
-  const qn=$('hp-q-num'); if(qn) qn.textContent=`Q${G.curQ+1}/${QUESTIONS.length}`;
-  const qt=$('hp-q-text'); if(qt) qt.textContent=q.q;
-  const hb=$('hp-bank-val'); if(hb) hb.textContent=G.bank;
-  const cat=$('hp-cat');
-  if(cat){ cat.textContent=q.cat==='college'?'College':'Classic'; cat.className=`cat-badge ${q.cat==='college'?'cat-college':'cat-classic'}`; }
-  const c=$('cheat-answers'); if(!c) return;
-  c.innerHTML=q.answers.map((a,i)=>`
-    <div class="cheat-row${G.revealed[i]?' found':''}">
+function updateCheatSheet() {
+  const q = QUESTIONS[G.curQ], $ = id => document.getElementById(id);
+  const qn = $('hp-q-num'); if (qn) qn.textContent = `Q${G.curQ+1}/${QUESTIONS.length}`;
+  const qt = $('hp-q-text'); if (qt) qt.textContent = q.q;
+  const hb = $('hp-bank-val'); if (hb) hb.textContent = G.bank;
+  const cat = $('hp-cat');
+  if (cat) { cat.textContent = q.cat==='college' ? 'College' : 'Classic'; cat.className = `cat-badge ${q.cat==='college' ? 'cat-college' : 'cat-classic'}`; }
+  const c = $('cheat-answers'); if (!c) return;
+  c.innerHTML = q.answers.map((a, i) => `
+    <div class="cheat-row${G.revealed[i] ? ' found' : ''}">
       <span class="cheat-num">${i+1}.</span>
       <span class="cheat-txt">${a.t}</span>
       <span class="cheat-pts">${a.p}pts</span>
-      ${G.revealed[i]?'<span class="cheat-ck">✓</span>':''}
+      ${G.revealed[i] ? '<span class="cheat-ck">✓</span>' : ''}
     </div>`).join('');
 }
 
 // ═══════════════════════════════════════════════════════════
 // GUESS LOGIC
 // ═══════════════════════════════════════════════════════════
-function handleGuessKey(inp,e){ if(e.key==='Enter') processGuess(inp.value); }
-function processGuess(raw){
-  const guess=(raw||'').trim().toLowerCase(); if(!guess) return;
-  const gi=document.getElementById('guess-inp'), gb=document.getElementById('guess-inp-bar');
-  if(gi){ gi.value=''; if(hostPanelVisible) gi.focus(); }
-  if(gb){ gb.value=''; if(!hostPanelVisible) gb.focus(); }
-  const q=QUESTIONS[G.curQ]; let found=-1;
-  for(let i=0;i<q.answers.length;i++){ if(G.revealed[i]) continue; if(isMatch(guess,q.answers[i].t.toLowerCase())){ found=i; break; } }
-  if(found>=0){ revealCard(found,true); setFeedback(`✓ Survey says! +${q.answers[found].p} pts`,'color:#4ade80'); }
-  else        { setFeedback('✗ Not on the board!','color:#f87171'); }
+function handleGuessKey(inp, e) { if (e.key === 'Enter') processGuess(inp.value); }
+function processGuess(raw) {
+  const guess = (raw || '').trim().toLowerCase(); if (!guess) return;
+  const gi = document.getElementById('guess-inp'), gb = document.getElementById('guess-inp-bar');
+  if (gi) { gi.value = ''; if (hostPanelVisible) gi.focus(); }
+  if (gb) { gb.value = ''; if (!hostPanelVisible) gb.focus(); }
+  const q = QUESTIONS[G.curQ]; let found = -1;
+  for (let i = 0; i < q.answers.length; i++) {
+    if (G.revealed[i]) continue;
+    if (isMatch(guess, q.answers[i].t.toLowerCase())) { found = i; break; }
+  }
+  if (found >= 0) { revealCard(found, true); setFeedback(`✓ Survey says! +${q.answers[found].p} pts`, 'color:#4ade80'); }
+  else            { setFeedback('✗ Not on the board!', 'color:#f87171'); }
 }
-function isMatch(g,a){
-  if(a.includes(g)||g.includes(a)) return true;
-  const gw=g.split(/\s+/).filter(w=>w.length>2), aw=a.split(/\s+/).filter(w=>w.length>2);
-  for(const gx of gw) for(const ax of aw){ if(ax.includes(gx)||gx.includes(ax)) return true; if(gx.length>4&&ax.length>4&&lev(gx,ax)<=2) return true; }
+function isMatch(g, a) {
+  if (a.includes(g) || g.includes(a)) return true;
+  const gw = g.split(/\s+/).filter(w=>w.length>2), aw = a.split(/\s+/).filter(w=>w.length>2);
+  for (const gx of gw) for (const ax of aw) {
+    if (ax.includes(gx) || gx.includes(ax)) return true;
+    if (gx.length > 4 && ax.length > 4 && lev(gx, ax) <= 2) return true;
+  }
   return false;
 }
-function lev(a,b){
-  const m=a.length,n=b.length,d=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>j===0?i:0));
-  for(let j=1;j<=n;j++) d[0][j]=j;
-  for(let i=1;i<=m;i++) for(let j=1;j<=n;j++) d[i][j]=a[i-1]===b[j-1]?d[i-1][j-1]:1+Math.min(d[i-1][j],d[i][j-1],d[i-1][j-1]);
+function lev(a, b) {
+  const m=a.length, n=b.length, d=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>j===0?i:0));
+  for (let j=1;j<=n;j++) d[0][j]=j;
+  for (let i=1;i<=m;i++) for (let j=1;j<=n;j++) d[i][j]=a[i-1]===b[j-1]?d[i-1][j-1]:1+Math.min(d[i-1][j],d[i][j-1],d[i-1][j-1]);
   return d[m][n];
 }
 
 // ═══════════════════════════════════════════════════════════
 // STRIKES
 // ═══════════════════════════════════════════════════════════
-function addStrike(){ if(G.strikes>=3) return; G.strikes++; renderStrikes(); splashStrike(); broadcastState(); }
-function setStrikeCount(n){ G.strikes=Math.min(Math.max(n,0),3); renderStrikes(); if(n>0) splashStrike(); broadcastState(); }
-function renderStrikes(){
-  for(let i=1;i<=3;i++){
-    const a=document.getElementById(`s${i}`),b=document.getElementById(`hs${i}`);
-    if(a) a.className='strike-dot'+(i<=G.strikes?' lit':'');
-    if(b) b.className='strike-sm'+(i<=G.strikes?' lit':'');
+function addStrike() { if (G.strikes>=3) return; G.strikes++; renderStrikes(); splashStrike(); broadcastState(); }
+function setStrikeCount(n) { G.strikes=Math.min(Math.max(n,0),3); renderStrikes(); if(n>0) splashStrike(); broadcastState(); }
+function renderStrikes() {
+  for (let i=1; i<=3; i++) {
+    const a=document.getElementById(`s${i}`), b=document.getElementById(`hs${i}`);
+    if (a) a.className = 'strike-dot' + (i<=G.strikes ? ' lit' : '');
+    if (b) b.className = 'strike-sm'  + (i<=G.strikes ? ' lit' : '');
   }
 }
-function splashStrike(){ const sp=document.getElementById('strike-splash'); sp.classList.add('show'); setTimeout(()=>sp.classList.remove('show'),650); }
+function splashStrike() { const sp=document.getElementById('strike-splash'); sp.classList.add('show'); setTimeout(()=>sp.classList.remove('show'),650); }
 
 // ═══════════════════════════════════════════════════════════
 // SCORING
 // ═══════════════════════════════════════════════════════════
-function awardTeam(t){
-  if(G.bank===0){ setFeedback('Nothing in the bank!','color:#facc15'); return; }
-  const pts=G.bank;
-  if(t===1){G.t1Score+=pts;animScore('t1-score');}else{G.t2Score+=pts;animScore('t2-score');}
-  G.bank=0; updateBank(); updateScores(); setFeedback(`+${pts} → ${t===1?G.t1Name:G.t2Name}!`,'color:#ffd700'); broadcastState();
+function awardTeam(t) {
+  if (G.bank===0) { setFeedback('Nothing in the bank!','color:#facc15'); return; }
+  const pts = G.bank;
+  if (t===1) { G.t1Score+=pts; animScore('t1-score'); } else { G.t2Score+=pts; animScore('t2-score'); }
+  G.bank=0; updateBank(); updateScores();
+  setFeedback(`+${pts} → ${t===1?G.t1Name:G.t2Name}!`, 'color:#ffd700');
+  broadcastState();
 }
-function discardBank(){ G.bank=0; updateBank(); setFeedback('Points discarded.','color:#6b7280'); broadcastState(); }
-function updateBank(){ const bv=document.getElementById('bank-val'); if(bv) bv.textContent=G.bank; const hb=document.getElementById('hp-bank-val'); if(hb) hb.textContent=G.bank; }
-function updateScores(){ document.getElementById('t1-score').textContent=G.t1Score; document.getElementById('t2-score').textContent=G.t2Score; }
-function animScore(id){ const el=document.getElementById(id); el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse'); }
+function discardBank() { G.bank=0; updateBank(); setFeedback('Points discarded.','color:#6b7280'); broadcastState(); }
+function updateBank() { const bv=document.getElementById('bank-val'); if(bv) bv.textContent=G.bank; const hb=document.getElementById('hp-bank-val'); if(hb) hb.textContent=G.bank; }
+function updateScores() { document.getElementById('t1-score').textContent=G.t1Score; document.getElementById('t2-score').textContent=G.t2Score; }
+function animScore(id) { const el=document.getElementById(id); el.classList.remove('pulse'); void el.offsetWidth; el.classList.add('pulse'); }
 
-let _fbt=null;
-function setFeedback(msg,style){ const el=document.getElementById('feedback'); if(!el) return; el.textContent=msg; el.setAttribute('style',style); clearTimeout(_fbt); if(msg) _fbt=setTimeout(()=>{el.textContent='';},3000); }
+let _fbt = null;
+function setFeedback(msg, style) { const el=document.getElementById('feedback'); if(!el) return; el.textContent=msg; el.setAttribute('style',style); clearTimeout(_fbt); if(msg) _fbt=setTimeout(()=>{el.textContent='';},3000); }
 
 // ═══════════════════════════════════════════════════════════
 // NAVIGATION
 // ═══════════════════════════════════════════════════════════
-function prevQ(){ loadQ(G.curQ-1); }
-function nextQ(){ loadQ(G.curQ+1); }
-function revealAll(){ QUESTIONS[G.curQ].answers.forEach((_,i)=>{ if(!G.revealed[i]) setTimeout(()=>revealCard(i,false),i*200); }); }
+function prevQ() { loadQ(G.curQ-1); }
+function nextQ() { loadQ(G.curQ+1); }
+function revealAll() { QUESTIONS[G.curQ].answers.forEach((_,i)=>{ if(!G.revealed[i]) setTimeout(()=>revealCard(i,false),i*200); }); }
 
 // ═══════════════════════════════════════════════════════════
 // HOST PANEL TOGGLE
 // ═══════════════════════════════════════════════════════════
-function toggleHostPanel(){
-  hostPanelVisible=!hostPanelVisible;
+function toggleHostPanel() {
+  hostPanelVisible = !hostPanelVisible;
   const panel=document.getElementById('host-panel'), bar=document.getElementById('host-bar'), btn=document.getElementById('host-toggle-btn');
-  if(hostPanelVisible){ panel.classList.remove('hp-hidden'); bar.style.display='none'; if(btn) btn.textContent='◀ Hide Host'; }
-  else{ panel.classList.add('hp-hidden'); bar.style.display='block'; if(btn) btn.textContent='▶ Host Panel'; }
+  if (hostPanelVisible) { panel.classList.remove('hp-hidden'); bar.style.display='none'; if(btn) btn.textContent='◀ Hide Host'; }
+  else                  { panel.classList.add('hp-hidden');    bar.style.display='block'; if(btn) btn.textContent='▶ Host Panel'; }
 }
 
-// Same-device display window (BroadcastChannel, no code needed)
-function openSameDeviceDisplay(){
-  const url=location.href.split('?')[0]+'?display&samedevice=1';
-  const w=window.open(url,'feud-display','width=1280,height=720,menubar=no,toolbar=no,location=no');
-  if(!w) alert('Pop-up blocked! Allow pop-ups then try again.');
+function openSameDeviceDisplay() {
+  const url = location.href.split('?')[0] + '?display&samedevice=1';
+  const w = window.open(url, 'feud-display', 'width=1280,height=720,menubar=no,toolbar=no,location=no');
+  if (!w) alert('Pop-up blocked! Allow pop-ups then try again.');
 }
 
 // ═══════════════════════════════════════════════════════════
 // RESET / WINNER
 // ═══════════════════════════════════════════════════════════
-function openResetModal(){ document.getElementById('reset-modal').classList.remove('hidden'); }
-function closeResetModal(){ document.getElementById('reset-modal').classList.add('hidden'); }
-function confirmReset(){
+function openResetModal()  { document.getElementById('reset-modal').classList.remove('hidden'); }
+function closeResetModal() { document.getElementById('reset-modal').classList.add('hidden'); }
+function confirmReset() {
   closeResetModal(); document.getElementById('winner-modal').classList.add('hidden');
   G.t1Score=0; G.t2Score=0; updateScores(); loadQ(0);
 }
-function showWinner(){
-  const s1=G.t1Score,s2=G.t2Score;
-  document.getElementById('winner-text').textContent=s1>s2?`${G.t1Name} wins with ${s1} points! 🏆`:s2>s1?`${G.t2Name} wins with ${s2} points! 🏆`:`Tie — both at ${s1} pts. Rematch required. ⚔️`;
+function showWinner() {
+  const s1=G.t1Score, s2=G.t2Score;
+  document.getElementById('winner-text').textContent =
+    s1>s2 ? `${G.t1Name} wins with ${s1} points! 🏆` :
+    s2>s1 ? `${G.t2Name} wins with ${s2} points! 🏆` :
+             `Tie — both at ${s1} pts. Rematch required. ⚔️`;
   document.getElementById('winner-modal').classList.remove('hidden');
 }
 
@@ -935,43 +901,36 @@ document.addEventListener('DOMContentLoaded', () => {
   const sameDevice = URL_PARAMS.has('samedevice');
 
   if (IS_DISPLAY) {
-    // ── DISPLAY mode (via URL ?display) ──
     IS_ADMIN = false;
     document.getElementById('host-panel').classList.add('hp-hidden');
     document.getElementById('host-bar').style.display = 'none';
     document.getElementById('host-header-btns').style.display = 'none';
 
     if (sameDevice) {
-      // Same-device: use BroadcastChannel, skip peer
       document.getElementById('game').classList.remove('hidden');
       showDispOverlay('Connected — waiting for host…');
       if (BC) BC.postMessage({ type: 'REQUEST' });
     } else if (AUTO_ROOM) {
-      // URL has ?room=CODE — auto connect
       document.getElementById('game').classList.remove('hidden');
       showDispOverlay('Connecting…');
       connectDisplay(AUTO_ROOM);
     } else {
-      // Show connect screen
       document.getElementById('display-connect').style.display = 'flex';
     }
     return;
   }
 
-  // ── Fresh open: show mode select ──
   document.getElementById('mode-select').style.display = 'flex';
-
-  // Pre-init admin peer in background so code is ready fast
   initAdminPeer();
 
-  ['inp-t1','inp-t2'].forEach(id=>{
-    document.getElementById(id).addEventListener('keydown', e=>{ if(e.key==='Enter') startGame(); });
+  ['inp-t1','inp-t2'].forEach(id => {
+    document.getElementById(id).addEventListener('keydown', e => { if (e.key==='Enter') startGame(); });
   });
 
-  // Room code input enter key
   const rci = document.getElementById('room-code-inp');
   if (rci) rci.addEventListener('keydown', e => { if (e.key==='Enter') connectDisplay_btn(); });
 });
 </script>
 </body>
 </html>
+```
