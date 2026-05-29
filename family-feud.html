@@ -162,8 +162,8 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
     <div class="field-label text-center mb-3">Enter Room Code from Host</div>
     <input id="room-code-inp" class="code-input mb-3" type="text" placeholder="ABCDEF" maxlength="6"
            oninput="this.value=this.value.toUpperCase().replace(/[^A-Z]/g,'')"
-           onkeydown="if(event.key==='Enter') connectDisplay()"/>
-    <button class="btn btn-gold w-full py-3 text-base" onclick="connectDisplay()">Connect →</button>
+           onkeydown="if(event.key==='Enter') connectDisplay_btn()"/>
+    <button class="btn btn-gold w-full py-3 text-base" onclick="connectDisplay_btn()">Connect →</button>
   </div>
   <div id="disp-connect-status" class="text-center" style="font-size:.82rem;color:#6b7280;min-height:1.5rem"></div>
   <button class="btn btn-gray" style="font-size:.65rem;margin-top:.5rem" onclick="showModeSelect()">← Back</button>
