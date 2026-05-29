@@ -229,7 +229,7 @@ body{font-family:'Oswald',sans-serif;background:radial-gradient(ellipse at top,#
         <span class="text-orange-400/60 hidden sm:inline" style="font-size:.62rem;letter-spacing:.1em">AFTER DARK · COLLEGE ED.</span>
       </div>
       <div class="flex items-center gap-2">
-        <span class="text-gray-500" style="font-size:.72rem">Q&nbsp;<span id="hdr-q" class="neon-gold font-bold">1</span>&nbsp;/&nbsp;40</span>
+        <span class="text-gray-500" style="font-size:.72rem">Q&nbsp;<span id="hdr-q" class="neon-gold font-bold">1</span>&nbsp;/&nbsp;<span id="hdr-total">—</span></span>
         <div id="host-header-btns" class="flex items-center gap-2">
           <button id="host-toggle-btn" class="btn btn-orange px-3 py-1" style="font-size:.68rem" onclick="toggleHostPanel()">◀ Hide Host</button>
           <button class="btn btn-gray px-3 py-1" style="font-size:.68rem" onclick="showWinner()">Results</button>
@@ -549,129 +549,158 @@ function connectDisplay_btn() {
 }
 
 // ═══════════════════════════════════════════════════════════
-// QUESTIONS (40: 20 classic + 20 college)
+// QUESTIONS (48: 15 classic + 33 college)
 // ═══════════════════════════════════════════════════════════
 const QUESTIONS = [
+  // ── CLASSIC (15) ──────────────────────────────────────────
   {cat:'classic',q:"Name something your therapist has probably said about your family.",answers:[
-    {t:"That's deeply traumatic",p:34},{t:"Classic boundary issues",p:24},{t:"Classic enabler behavior",p:17},
-    {t:"We need more sessions",p:12},{t:"Your mother is the root cause",p:8},{t:"Have you tried journaling?",p:5}]},
+    {t:"Deeply traumatic",p:34},{t:"Boundary issues",p:24},{t:"Enabler behavior",p:17},
+    {t:"Need more sessions",p:12},{t:"Your mother",p:8},{t:"Try journaling",p:5}]},
   {cat:'classic',q:"We asked 100 divorced people: What's the ONE thing you don't miss?",answers:[
-    {t:"The in-laws",p:38},{t:"Sharing the remote",p:22},{t:"Being asked where I've been",p:16},
-    {t:"Their cooking",p:11},{t:"Pretending to like their friends",p:8},{t:"Coordinating vacations",p:5}]},
+    {t:"The in-laws",p:38},{t:"Sharing the remote",p:22},{t:"Being questioned",p:16},
+    {t:"Their cooking",p:11},{t:"Their friends",p:8},{t:"Coordinating trips",p:5}]},
   {cat:'classic',q:"Name a reason a normal person might fake their own death.",answers:[
-    {t:"Student loan debt",p:40},{t:"Family reunion coming up",p:25},{t:"Unbearable job",p:15},
-    {t:"Toxic ex won't leave them alone",p:10},{t:"Group chat obligations",p:7},{t:"Their own wedding day",p:3}]},
+    {t:"Student loans",p:40},{t:"Family reunion",p:25},{t:"Terrible job",p:15},
+    {t:"Toxic ex",p:10},{t:"Group chat",p:7},{t:"Their own wedding",p:3}]},
   {cat:'classic',q:"Name something people absolutely lie about on their dating profile.",answers:[
-    {t:"Height",p:36},{t:"Age",p:28},{t:"Job and income",p:18},
-    {t:"Photos are 10 years old",p:11},{t:"Loving the outdoors",p:5},{t:"Being laid back",p:2}]},
+    {t:"Height",p:36},{t:"Age",p:28},{t:"Their job",p:18},
+    {t:"Old photos",p:11},{t:"Loving outdoors",p:5},{t:"Being laid back",p:2}]},
   {cat:'classic',q:"Name something you do at 2 AM that you'd be embarrassed to admit.",answers:[
-    {t:"Doom-scroll social media",p:32},{t:"Eat everything in the fridge",p:24},{t:"Stalk an ex online",p:19},
-    {t:"Regret online shopping",p:13},{t:"Cry for absolutely no reason",p:8},{t:"Watch reality TV alone",p:4}]},
-  {cat:'classic',q:"Name something a supervillain and a middle manager have in common.",answers:[
-    {t:"Love of useless monologuing",p:35},{t:"Pointless mandatory meetings",p:25},{t:"Minions who do all the work",p:19},
-    {t:"Never held accountable",p:12},{t:"World domination goals / KPIs",p:6},{t:"Terrible fashion choices",p:3}]},
+    {t:"Doom-scrolling",p:32},{t:"Stress eating",p:24},{t:"Stalking an ex",p:19},
+    {t:"Regret shopping",p:13},{t:"Crying",p:8},{t:"Reality TV",p:4}]},
   {cat:'classic',q:"Name something you'd do at a wedding when you secretly hate the couple.",answers:[
-    {t:"Drink heavily",p:37},{t:"Bet on how long it lasts",p:26},{t:"Avoid all eye contact",p:16},
-    {t:"Leave early with a fake excuse",p:12},{t:"Bring a terrible gift",p:6},{t:"Ruin the Spotify playlist",p:3}]},
+    {t:"Drink heavily",p:37},{t:"Bet on divorce",p:26},{t:"Avoid eye contact",p:16},
+    {t:"Leave early",p:12},{t:"Bad gift",p:6},{t:"Ruin the playlist",p:3}]},
   {cat:'classic',q:"Name a phrase that sounds motivational but is actually terrible advice.",answers:[
-    {t:"Follow your passion",p:38},{t:"Quit your job and travel",p:27},{t:"You only live once",p:17},
+    {t:"Follow your passion",p:38},{t:"Quit and travel",p:27},{t:"YOLO",p:17},
     {t:"Everything happens for a reason",p:11},{t:"Just be yourself",p:5},{t:"Money can't buy happiness",p:2}]},
   {cat:'classic',q:"Name something people pretend to understand but absolutely don't.",answers:[
-    {t:"The stock market",p:35},{t:"Wine tasting",p:24},{t:"Modern art at a museum",p:18},
-    {t:"Their own car engine",p:12},{t:"Cricket rules",p:7},{t:"Their own insurance plan",p:4}]},
+    {t:"The stock market",p:35},{t:"Wine tasting",p:24},{t:"Modern art",p:18},
+    {t:"Their car engine",p:12},{t:"Cricket",p:7},{t:"Their insurance",p:4}]},
   {cat:'classic',q:"Name something that would immediately ruin a first date.",answers:[
-    {t:"Talking about the ex non-stop",p:36},{t:"Showing up with your parents",p:28},{t:"Staring at your phone the whole time",p:16},
-    {t:"Mentioning marriage on date one",p:11},{t:"Dine-and-dash attempt",p:6},{t:"Intense unprovoked political rant",p:3}]},
-  {cat:'classic',q:"Name something adults do that would terrify children if they fully understood it.",answers:[
-    {t:"Paying taxes",p:32},{t:"Mortgage payments for 30 years",p:26},{t:"Sitting through work meetings",p:20},
-    {t:"Doing small talk at parties",p:12},{t:"Reading the news daily",p:7},{t:"Finding out Santa was fake",p:3}]},
-  {cat:'classic',q:"Name a red flag in someone's apartment a date would immediately notice.",answers:[
-    {t:"Literally no furniture",p:34},{t:"Shrine dedicated to an ex",p:26},{t:"Suspicious number of locks",p:18},
-    {t:"One fork, one plate, one cup",p:12},{t:"Large taxidermy collection",p:7},{t:"Whiteboard full of cryptic plans",p:3}]},
+    {t:"Talking about the ex",p:36},{t:"Showing up with parents",p:28},{t:"Staring at your phone",p:16},
+    {t:"Mentioning marriage",p:11},{t:"Dine-and-dash",p:6},{t:"Unprovoked rant",p:3}]},
   {cat:'classic',q:"Name something people say at a funeral that they probably shouldn't.",answers:[
-    {t:"He's in a better place now",p:33},{t:"At least the suffering is over",p:24},{t:"So... who gets the house?",p:18},
-    {t:"I never actually liked him",p:13},{t:"This is great for my parking karma",p:8},{t:"Who's hungry after this?",p:4}]},
+    {t:"Better place now",p:33},{t:"Suffering is over",p:24},{t:"Who gets the house?",p:18},
+    {t:"Never liked him",p:13},{t:"Who's hungry?",p:8},{t:"Great networking",p:4}]},
   {cat:'classic',q:"Name something a time traveler from 1990 would be most unprepared for today.",answers:[
-    {t:"Subscription fees for everything",p:35},{t:"Everyone staring at phones",p:25},{t:"The concept of influencers",p:18},
-    {t:"Avocado toast costing $22",p:12},{t:"Getting canceled for old opinions",p:7},{t:"Smoking banned absolutely everywhere",p:3}]},
+    {t:"Subscription fees",p:35},{t:"Everyone on phones",p:25},{t:"Influencers",p:18},
+    {t:"$22 toast",p:12},{t:"Getting canceled",p:7},{t:"No indoor smoking",p:3}]},
   {cat:'classic',q:"Name something your GPS would say if it had feelings about your driving.",answers:[
-    {t:"I literally told you to turn left",p:37},{t:"Recalculating... again...",p:27},{t:"You really came here at 3 AM?",p:17},
-    {t:"This neighborhood is a bold choice",p:11},{t:"You've passed it four times now",p:6},{t:"I quit. You're on your own.",p:2}]},
-  {cat:'classic',q:"Name something you'd find in a real supervillain's Amazon cart.",answers:[
-    {t:"Bulk zip ties",p:38},{t:"Industrial chest freezer",p:26},{t:"White cat for stroking ominously",p:17},
-    {t:"Monogrammed black turtleneck",p:11},{t:"Fog machine (Prime delivery)",p:5},{t:"Self-destruct button",p:3}]},
-  {cat:'classic',q:"Name something you'd overhear at a Rock Bottom Support Group.",answers:[
-    {t:"I bought a boat",p:32},{t:"I texted them back at 3 AM",p:25},{t:"I quit my job to become a DJ",p:19},
-    {t:"I ate 6 burritos and sobbed",p:13},{t:"I spent rent money on crystals",p:8},{t:"Matching tattoos on date two",p:3}]},
+    {t:"I said turn left",p:37},{t:"Recalculating again",p:27},{t:"Why are you here?",p:17},
+    {t:"You passed it again",p:11},{t:"Bold choice",p:6},{t:"I quit",p:2}]},
   {cat:'classic',q:"Name something technically legal that absolutely should be a crime.",answers:[
-    {t:"Loud open-mouth chewing",p:35},{t:"Reclining your airplane seat",p:27},{t:"Ghosting someone after 3 months",p:18},
-    {t:"Autoplay videos with sound on",p:11},{t:"Replying 'K' to a long message",p:6},{t:"Spoiling a movie in the title",p:3}]},
+    {t:"Loud chewing",p:35},{t:"Reclining your seat",p:27},{t:"Ghosting",p:18},
+    {t:"Autoplay sound",p:11},{t:"Replying 'K'",p:6},{t:"Movie spoilers",p:3}]},
   {cat:'classic',q:"Name something your phone's AI knows about you that it should keep secret.",answers:[
-    {t:"What you search at midnight",p:38},{t:"Every embarrassing selfie ever taken",p:24},{t:"How many times you played that sad song",p:17},
-    {t:"Angry texts you drafted but never sent",p:12},{t:"How often you ignore calls from mom",p:6},{t:"Your complete location history",p:3}]},
+    {t:"Midnight searches",p:38},{t:"Embarrassing selfies",p:24},{t:"Sad song count",p:17},
+    {t:"Angry drafts",p:12},{t:"Ignored mom",p:6},{t:"Location history",p:3}]},
   {cat:'classic',q:"Name a sign that your life is basically a reality TV show.",answers:[
-    {t:"Nothing works unless someone's watching",p:34},{t:"You have a confessional in the bathroom",p:26},{t:"Every exit involves a dramatic speech",p:18},
-    {t:"Your friends are secretly being cast",p:12},{t:"You check your ratings before decisions",p:7},{t:"There's a rose ceremony at family dinner",p:3}]},
+    {t:"Works when watched",p:34},{t:"Dramatic exits",p:26},{t:"Friends are cast",p:18},
+    {t:"Bathroom confessional",p:12},{t:"Checking ratings",p:7},{t:"Rose ceremony",p:3}]},
+
+  // ── COLLEGE — ORIGINAL KEPT (15) ─────────────────────────
   {cat:'college',q:"Name something college students blame their low GPA on.",answers:[
-    {t:"The professor just hates me",p:35},{t:"Untreated mental health issues",p:25},{t:"Working 3 jobs to pay rent",p:18},
-    {t:"Too many social obligations",p:12},{t:"The pandemic (still)",p:7},{t:"Mercury in retrograde",p:3}]},
+    {t:"The professor",p:35},{t:"Mental health",p:25},{t:"Working three jobs",p:18},
+    {t:"Social life",p:12},{t:"The pandemic",p:7},{t:"Mercury retrograde",p:3}]},
   {cat:'college',q:"Name the worst place to wake up after a campus party.",answers:[
-    {t:"The library floor",p:34},{t:"Your professor's front yard",p:26},{t:"The completely wrong dorm",p:18},
-    {t:"The campus chapel",p:12},{t:"Dining hall still in last night's outfit",p:7},{t:"Your ex's hallway",p:3}]},
+    {t:"Library floor",p:34},{t:"Professor's yard",p:26},{t:"Wrong dorm",p:18},
+    {t:"Campus chapel",p:12},{t:"Dining hall",p:7},{t:"Ex's hallway",p:3}]},
   {cat:'college',q:"What does a completely broke college student eat for dinner?",answers:[
-    {t:"Instant ramen, plain",p:40},{t:"Stolen dining hall food",p:26},{t:"Gas station roller hot dogs",p:16},
-    {t:"Condiment packets alone",p:9},{t:"Their roommate's food without asking",p:6},{t:"Nothing — crying counts",p:3}]},
+    {t:"Instant ramen",p:40},{t:"Stolen dining hall food",p:26},{t:"Gas station hot dog",p:16},
+    {t:"Condiment packets",p:9},{t:"Roommate's food",p:6},{t:"Nothing",p:3}]},
   {cat:'college',q:"Name something you quickly hide when your professor walks past your laptop.",answers:[
-    {t:"Netflix or YouTube",p:38},{t:"Online shopping cart",p:25},{t:"Dating app",p:17},
-    {t:"Someone else's essay open in a tab",p:12},{t:"Group chat full of memes",p:5},{t:"A job application",p:3}]},
+    {t:"Netflix",p:38},{t:"Online shopping",p:25},{t:"Dating app",p:17},
+    {t:"Someone else's essay",p:12},{t:"Meme group chat",p:5},{t:"Job application",p:3}]},
   {cat:'college',q:"Name something in a dorm room that would absolutely horrify a parent.",answers:[
-    {t:"A wall of empty bottles",p:35},{t:"The mystery biological smell",p:25},{t:"Dishes from three weeks ago",p:18},
-    {t:"A stranger still asleep in the bed",p:12},{t:"The GPA printout",p:7},{t:"Sustained ramen-only diet evidence",p:3}]},
+    {t:"Empty bottles",p:35},{t:"Biological smell",p:25},{t:"Old dishes",p:18},
+    {t:"Stranger in the bed",p:12},{t:"The GPA",p:7},{t:"Ramen evidence",p:3}]},
   {cat:'college',q:"Name a lie college students confidently put on their resume.",answers:[
-    {t:"Proficient in Microsoft Excel",p:36},{t:"Excellent leadership skills",p:27},{t:"Fluent in Spanish",p:17},
-    {t:"References available upon request",p:11},{t:"3+ years of related experience",p:6},{t:"Passionate team player",p:3}]},
+    {t:"Excel proficient",p:36},{t:"Leadership skills",p:27},{t:"Fluent in Spanish",p:17},
+    {t:"3+ years experience",p:11},{t:"References available",p:6},{t:"Team player",p:3}]},
   {cat:'college',q:"Name what students do in the 10 minutes before a final exam.",answers:[
-    {t:"Panic-cram the entire textbook",p:35},{t:"Full emotional meltdown",p:27},{t:"Ask if there's a curve",p:17},
-    {t:"Text mom for moral support",p:11},{t:"Make peace with complete failure",p:7},{t:"Pray to a god they just discovered",p:3}]},
+    {t:"Panic cram",p:35},{t:"Full meltdown",p:27},{t:"Ask about a curve",p:17},
+    {t:"Text mom",p:11},{t:"Accept failure",p:7},{t:"Find religion",p:3}]},
   {cat:'college',q:"Name a reason a college student emails their professor at 2 AM.",answers:[
-    {t:"Begging for an extension",p:38},{t:"Misread the due date completely",p:26},{t:"Grandma died (fifth time this semester)",p:17},
-    {t:"Disputing a 0.5-point grade",p:11},{t:"Deep personal revelation about the coursework",p:5},{t:"Accidentally hit Reply All",p:3}]},
+    {t:"Extension request",p:38},{t:"Misread the due date",p:26},{t:"Grandma died again",p:17},
+    {t:"Disputing 0.5 points",p:11},{t:"Deep revelation",p:5},{t:"Accidental Reply All",p:3}]},
   {cat:'college',q:"Name a reason someone drops their major junior year.",answers:[
-    {t:"Realized they hate the field",p:34},{t:"Job market stats are terrifying",p:26},{t:"Professor had 1.2 stars on RateMyProf",p:18},
-    {t:"Followed a love interest to another dept",p:12},{t:"TikTok said it was a sign",p:7},{t:"Couldn't pass the one required class",p:3}]},
-  {cat:'college',q:"Name something drunk college students sincerely believe.",answers:[
-    {t:"They are completely sober right now",p:36},{t:"This is definitely their last drink",p:25},{t:"Their ex misses them right now",p:18},
-    {t:"They will wake up for 8 AM no problem",p:12},{t:"They can absolutely drive",p:6},{t:"Their drunk texts were totally normal",p:3}]},
+    {t:"Hate the field",p:34},{t:"Job market terror",p:26},{t:"One-star professor",p:18},
+    {t:"Followed a crush",p:12},{t:"TikTok said to",p:7},{t:"Couldn't pass one class",p:3}]},
   {cat:'college',q:"Name what students tell their parents student loan money goes toward.",answers:[
-    {t:"Books and course materials",p:37},{t:"Healthy food and groceries",p:27},{t:"Important school supplies",p:17},
-    {t:"Professional development events",p:11},{t:"Campus-related transportation",p:5},{t:"Tuition — ironic, spent elsewhere",p:3}]},
+    {t:"Books",p:37},{t:"Groceries",p:27},{t:"School supplies",p:17},
+    {t:"Professional events",p:11},{t:"Transportation",p:5},{t:"Tuition (ironic)",p:3}]},
   {cat:'college',q:"Name a place on campus where students go to cry privately.",answers:[
-    {t:"Single-occupancy bathroom stall",p:38},{t:"Back corner of the library",p:26},{t:"Alone in their parked car",p:18},
-    {t:"Campus counseling waiting room",p:11},{t:"Behind the auditorium",p:4},{t:"Just openly sobbing in the quad",p:3}]},
+    {t:"Bathroom stall",p:38},{t:"Back of the library",p:26},{t:"Parked car",p:18},
+    {t:"Counseling waiting room",p:11},{t:"Behind the auditorium",p:4},{t:"Openly in the quad",p:3}]},
   {cat:'college',q:"Name something a hungover student says during an 8 AM class.",answers:[
-    {t:"Can you turn off the lights?",p:35},{t:"Is this going to be on the exam?",p:25},{t:"I'm just really tired lately...",p:19},
-    {t:"Do you have any water?",p:12},{t:"I think I might be sick",p:6},{t:"[Total silence, head on desk]",p:3}]},
-  {cat:'college',q:"Name an instant red flag in a college student's dating app profile.",answers:[
-    {t:"Bio just says 'No drama'",p:34},{t:"Impossible to identify them in all group photos",p:26},{t:"Main photo is a fish they caught",p:18},
-    {t:"Bio is only their major and height",p:12},{t:"'Looking for a study buddy'",p:7},{t:"'I'm an entrepreneur' (no context)",p:3}]},
-  {cat:'college',q:"Name a way a campus hookup immediately goes wrong.",answers:[
-    {t:"They're in three of your classes",p:34},{t:"They're actually dating your friend",p:27},{t:"Your RA walks in",p:18},
-    {t:"They immediately call you their partner",p:12},{t:"They bring it up during group project",p:6},{t:"They follow all your family members",p:3}]},
-  {cat:'college',q:"Name something college seniors say that reveals they're terrified of graduation.",answers:[
-    {t:"'I might just go to grad school'",p:38},{t:"'Gap years are actually really healthy'",p:26},{t:"'The economy is too unstable to start'",p:17},
-    {t:"'I'm still figuring out my passion'",p:11},{t:"'My advisor thinks I should stay'",p:5},{t:"'I love it here, I never want to leave'",p:3}]},
+    {t:"Turn off the lights",p:35},{t:"Is this on the exam?",p:25},{t:"Just really tired",p:19},
+    {t:"Do you have water?",p:12},{t:"I think I'm sick",p:6},{t:"Head on desk",p:3}]},
   {cat:'college',q:"Name something a college student does instead of attending class.",answers:[
-    {t:"Sleep heroically through it",p:36},{t:"Watch Netflix and call it self-care",p:24},{t:"Plan to catch up from a classmate",p:18},
-    {t:"Email a suspiciously vague excuse",p:12},{t:"Actually study for a different class",p:7},{t:"Become deeply invested in brunch",p:3}]},
+    {t:"Sleep",p:36},{t:"Watch Netflix",p:24},{t:"Copy someone's notes",p:18},
+    {t:"Vague excuse email",p:12},{t:"Study something else",p:7},{t:"Extended brunch",p:3}]},
   {cat:'college',q:"Name the worst thing about sharing a college dorm bathroom.",answers:[
-    {t:"Unexplained hair absolutely everywhere",p:36},{t:"Someone showers loudly at 3 AM",p:25},{t:"Running out of hot water daily",p:18},
-    {t:"The smell that never fully leaves",p:13},{t:"One person's 45-minute showers",p:5},{t:"Flip-flops now required at all times",p:3}]},
+    {t:"Hair everywhere",p:36},{t:"3 AM shower noise",p:25},{t:"No hot water",p:18},
+    {t:"Permanent smell",p:13},{t:"45-minute showers",p:5},{t:"Mandatory flip-flops",p:3}]},
   {cat:'college',q:"Name something a college student brags about that's actually embarrassing.",answers:[
-    {t:"'I only slept 2 hours'",p:35},{t:"'Haven't been to class in 3 weeks'",p:26},{t:"'I live entirely on energy drinks'",p:18},
-    {t:"'Wrote the whole essay the night before'",p:12},{t:"'I can do a keg stand'",p:6},{t:"'Never cooked a real meal in my life'",p:3}]},
-  {cat:'college',q:"Name something a college student does to accidentally avoid going home for the holidays.",answers:[
-    {t:"Invents a mandatory final exam",p:36},{t:"Claims a huge group project deadline",p:25},{t:"Books flight at completely unusable times",p:19},
-    {t:"Develops a vague but alarming illness",p:12},{t:"Volunteers for something nobody wants",p:5},{t:"Simply stops responding to family texts",p:3}]},
+    {t:"Only slept 2 hours",p:35},{t:"Haven't been to class",p:26},{t:"Live on energy drinks",p:18},
+    {t:"Essay in one night",p:12},{t:"Keg stand",p:6},{t:"Never cooked",p:3}]},
+
+  // ── COLLEGE — NEW (18) ────────────────────────────────────
+  {cat:'college',q:"Besides studying, why is a college student up at 4 AM?",answers:[
+    {t:"Scrolling TikTok",p:35},{t:"Existential dread",p:25},{t:"Partying",p:18},
+    {t:"Crying",p:12},{t:"Gaming",p:10}]},
+  {cat:'college',q:"Name something you pray your professor doesn't look at during a presentation.",answers:[
+    {t:"Search history",p:40},{t:"My notes",p:22},{t:"My face",p:15},
+    {t:"Open tabs",p:13},{t:"ChatGPT",p:10}]},
+  {cat:'college',q:"What's the fastest way to ruin a group project?",answers:[
+    {t:"Ghost the group",p:45},{t:"Do zero work",p:25},{t:"Bad ideas",p:15},
+    {t:"Plagiarize",p:10},{t:"Miss the deadline",p:5}]},
+  {cat:'college',q:"Name a terrible meal a broke student considers a luxury.",answers:[
+    {t:"Instant ramen",p:38},{t:"Fast food",p:28},{t:"Cereal",p:16},
+    {t:"Leftover pizza",p:12},{t:"Ice water",p:6}]},
+  {cat:'college',q:"What's a major red flag on a student's nightstand?",answers:[
+    {t:"Empty vapes",p:35},{t:"Moldy cups",p:28},{t:"Unopened textbooks",p:18},
+    {t:"Antidepressants",p:12},{t:"Crusty towel",p:7}]},
+  {cat:'college',q:"Name something a college student uses as a personality trait.",answers:[
+    {t:"Caffeine addiction",p:32},{t:"Their major",p:26},{t:"Sleep deprivation",p:20},
+    {t:"Being broke",p:14},{t:"Trauma",p:8}]},
+  {cat:'college',q:"Name something students do right before a deadline they've had for a month.",answers:[
+    {t:"Panic study",p:38},{t:"Pray",p:22},{t:"Finally start",p:20},
+    {t:"Make excuses",p:12},{t:"Give up",p:8}]},
+  {cat:'college',q:"Name a reason a student is broke 3 days after payday.",answers:[
+    {t:"Food delivery",p:35},{t:"Going out",p:28},{t:"Online shopping",p:20},
+    {t:"Ubers",p:12},{t:"Subscriptions",p:5}]},
+  {cat:'college',q:"Name what a college student actually does during 'study time'.",answers:[
+    {t:"Scrolling phone",p:38},{t:"Napping",p:26},{t:"Snacking",p:18},
+    {t:"Watching Netflix",p:12},{t:"Chatting",p:6}]},
+  {cat:'college',q:"Name something students say right before making a terrible decision.",answers:[
+    {t:"It'll be fine",p:38},{t:"YOLO",p:28},{t:"Just this once",p:18},
+    {t:"Hold my drink",p:10},{t:"Last time",p:6}]},
+  {cat:'college',q:"Name a 'study technique' that involves zero actual studying.",answers:[
+    {t:"Color-coding notes",p:35},{t:"Making playlists",p:25},{t:"Organizing the desk",p:20},
+    {t:"Watch summaries",p:14},{t:"Re-reading nothing",p:6}]},
+  {cat:'college',q:"Name something a student blames when they fail a test.",answers:[
+    {t:"The professor",p:40},{t:"Not enough sleep",p:28},{t:"Bad luck",p:16},
+    {t:"Too stressed",p:10},{t:"The curve",p:6}]},
+  {cat:'college',q:"Name what college students use instead of cooking.",answers:[
+    {t:"Microwave",p:38},{t:"DoorDash",p:28},{t:"Dining hall",p:18},
+    {t:"Roommate's food",p:10},{t:"Skip eating",p:6}]},
+  {cat:'college',q:"Name a sign you pulled an all-nighter before class.",answers:[
+    {t:"Yesterday's clothes",p:35},{t:"Hollow eyes",p:25},{t:"Fifth coffee",p:20},
+    {t:"Can't form sentences",p:12},{t:"Randomly crying",p:8}]},
+  {cat:'college',q:"Name something students ask classmates for right before an exam.",answers:[
+    {t:"Notes",p:40},{t:"The answers",p:30},{t:"A pencil",p:16},
+    {t:"Emotional support",p:9},{t:"A prayer",p:5}]},
+  {cat:'college',q:"Name a moment that makes a student consider dropping out.",answers:[
+    {t:"Finals week",p:38},{t:"Seeing tuition bill",p:26},{t:"A group project",p:18},
+    {t:"An 8 AM class",p:12},{t:"Career fair",p:6}]},
+  {cat:'college',q:"Name something a student does in lecture instead of listening.",answers:[
+    {t:"Texting",p:38},{t:"Online shopping",p:26},{t:"Sleeping",p:20},
+    {t:"Drawing",p:10},{t:"Eating",p:6}]},
+  {cat:'college',q:"Name the most chaotic place a student has slept.",answers:[
+    {t:"Their car",p:35},{t:"The library",p:28},{t:"Stranger's couch",p:18},
+    {t:"Bathroom floor",p:12},{t:"During class",p:7}]},
 ];
 
 // ═══════════════════════════════════════════════════════════
@@ -739,6 +768,7 @@ function loadQ(idx) {
   G.curQ=idx; G.strikes=0; G.bank=0;
   G.revealed = new Array(QUESTIONS[idx].answers.length).fill(false);
   document.getElementById('hdr-q').textContent = idx+1;
+  const ht=document.getElementById('hdr-total'); if(ht) ht.textContent=QUESTIONS.length;
   document.getElementById('q-text').textContent = QUESTIONS[idx].q;
   const gi=document.getElementById('guess-inp'), gb=document.getElementById('guess-inp-bar');
   if(gi) gi.value=''; if(gb) gb.value='';
@@ -786,7 +816,7 @@ function revealCard(i,addToBank){
 // ═══════════════════════════════════════════════════════════
 function updateCheatSheet(){
   const q=QUESTIONS[G.curQ], $=id=>document.getElementById(id);
-  const qn=$('hp-q-num'); if(qn) qn.textContent=`Q${G.curQ+1}/40`;
+  const qn=$('hp-q-num'); if(qn) qn.textContent=`Q${G.curQ+1}/${QUESTIONS.length}`;
   const qt=$('hp-q-text'); if(qt) qt.textContent=q.q;
   const hb=$('hp-bank-val'); if(hb) hb.textContent=G.bank;
   const cat=$('hp-cat');
