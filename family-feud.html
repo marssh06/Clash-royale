@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Family Feud: After Dark Edition</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; padding: 0; }
+    body {
+      font-family: 'Oswald', sans-serif;
+      background: radial-gradient(ellipse at top, #0d0d3b 0%, #07071a 60%);
+      min-height: 100vh;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* ── CARD FLIP ── */
+    .card-wrap { perspective: 900px; }
+    .card-inner {
+      position: relative;
+      width: 100%; height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.55s cubic-bezier(.4,0,.2,1);
+    }
+    .card-wrap.flipped .card-inner { transform: rotateY(180deg); }
+    .card-face {
+      position: absolute; inset: 0;
+      backface-visibility: hidden;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 4px;
+    }
+    .card-front {
+      background: linear-gradient(145deg, #1a2f7a, #0e1e57);
+      border: 2px solid #ffd700;
+      box-shadow: 0 0 8px rgba(255,215,0,0.25);
+    }
+    .card-back {
+      background: linear-gradient(145deg, #1c3fa0, #1632a0);
+      border: 2px solid #ffd700;
+      box-shadow: 0 0 8px rgba(255,215,0,0.25);
+      transform: rotateY(180deg);
+      padding: 6px 10px;
+      text-align: center;
+    }
+    .card-wrap.reveal-flash .card-back {
+      animation: flashGold 0.8s ease-out;
+    }
+    @keyframes flashGold {
+      0%   { box-shadow: 0 0 0px #ffd700; border-color: #fff; }
+      40%  { box-shadow: 0 0 30px #ffd700, 0 0 60px #ff8c00; border-color: #ffd700; }
+      100% { box-shadow: 0 0 8px rgba(255,215,0,0.25); }
+    }
+
+    /* ── STRIKES ── */
+    .strike-dot { font-size: 2.8rem; font-weight: 900; transition: color .3s, text-shadow .3s; color: #2a2a2a; }
+    .strike-dot.lit { color: #ff1111; text-shadow: 0 0 14px #ff0000, 0 0 30px #ff4400; }
+    #strike-splash {
+      position: fixed; inset: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none; opacity: 0;
+      transition: opacity .15s;
+    }
+    #strike-splash.show { opacity: 1; }
+    #strike-splash-x {
+      font-size: min(22vw, 18rem);
+      font-weight: 900;
+      color: #ff0000;
+      text-shadow: 0 0 40px #ff0000, 0 0 80px #ff4400, 0 0 120px #ff8800;
+      transform: scale(0.4) rotate(-12deg);
+      transition: transform .22s cubic-bezier(.2,1.6,.4,1);
+    }
+    #strike-splash.show #strike-splash-x { transform: scale(1) rotate(-8deg); }
+
+    /* ── NEON TITLE ── */
+    .neon-gold {
+      color: #ffd700;
+      text-shadow: 0 0 8px #ffd700, 0 0 18px rgba(255,215,0,0.5);
+    }
+    .neon-border-gold { box-shadow: 0 0 12px rgba(255,215,0,0.35); }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: 'Oswald', sans-serif; font-weight: 700; letter-spacing: .08em;
+      cursor: pointer; transition: filter .15s, transform .12s, box-shadow .15s;
+      border: none; outline: none; border-radius: 8px; padding: 0.45rem 1.1rem;
+      text-transform: uppercase; font-size: 0.85rem;
+      user-select: none;
+    }
+    .btn:active { transform: scale(0.96); }
+    .btn-gold  { background: linear-gradient(135deg,#ffd700,#e69500); color: #0a0a1e; }
+    .btn-gold:hover  { filter: brightness(1.1); box-shadow: 0 4px 18px rgba(255,215,0,0.45); }
+    .btn-red   { background: linear-gradient(135deg,#dc2626,#991b1b); color: #fff; }
+    .btn-red:hover   { filter: brightness(1.15); box-shadow: 0 4px 18px rgba(220,38,38,0.5); }
+    .btn-blue  { background: linear-gradient(135deg,#1d4ed8,#1e3a8a); color: #fff; }
+    .btn-blue:hover  { filter: brightness(1.15); box-shadow: 0 4px 18px rgba(29,78,216,0.4); }
+    .btn-purple{ background: linear-gradient(135deg,#7c3aed,#4c1d95); color: #fff; }
+    .btn-purple:hover{ filter: brightness(1.15); box-shadow: 0 4px 18px rgba(124,58,237,0.4); }
+    .btn-gray  { background: #2a2a4a; color: #aaa; }
+    .btn-gray:hover  { background: #35355a; color: #ccc; }
+
+    /* ── SCOREBOARD ── */
+    .score-box {
+      background: linear-gradient(135deg, rgba(29,78,216,0.22), rgba(14,30,87,0.3));
+      border: 2px solid rgba(255,215,0,0.45);
+      border-radius: 14px;
+    }
+    .score-val {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: #ffd700;
+      line-height: 1;
+      transition: transform .4s, color .4s;
+    }
+    .score-val.pulse { animation: scorePulse .5s ease-out; }
+    @keyframes scorePulse {
+      0%   { transform: scale(1); }
+      40%  { transform: scale(1.25); color: #fff; }
+      100% { transform: scale(1); color: #ffd700; }
+    }
+
+    /* ── BANK ── */
+    .bank-box {
+      background: linear-gradient(135deg, rgba(109,40,217,0.25), rgba(76,29,149,0.2));
+      border: 2px solid rgba(167,139,250,0.4);
+      border-radius: 14px;
+    }
+
+    /* ── INPUT ── */
+    .guess-input {
+      background: rgba(14,20,60,0.7);
+      border: 2px solid rgba(255,215,0,0.4);
+      border-radius: 10px;
+      color: #fff;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.1rem;
+      padding: 0.6rem 1rem;
+      width: 100%;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .guess-input:focus {
+      outline: none;
+      border-color: #ffd700;
+      box-shadow: 0 0 0 3px rgba(255,215,0,0.2);
+    }
+    .guess-input::placeholder { color: rgba(255,255,255,0.3); }
+
+    /* ── MODAL ── */
+    .modal-bg {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .modal-card {
+      background: linear-gradient(145deg, #0f1440, #1a0a3e);
+      border: 2px solid #ffd700;
+      border-radius: 18px;
+      padding: 2.5rem 2rem;
+      max-width: 420px;
+      width: 92%;
+      box-shadow: 0 0 40px rgba(255,215,0,0.2);
+    }
+    .field-label { font-size: 0.75rem; letter-spacing: .12em; color: #a78bfa; margin-bottom: 4px; text-transform: uppercase; }
+    .field-input {
+      background: rgba(10,14,50,0.8);
+      border: 2px solid rgba(255,215,0,0.35);
+      border-radius: 8px;
+      color: #fff;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.05rem;
+      padding: 0.55rem 0.9rem;
+      width: 100%;
+      transition: border-color .2s;
+    }
+    .field-input:focus { outline: none; border-color: #ffd700; }
+    .field-input::placeholder { color: rgba(255,255,255,0.25); }
+
+    /* ── Q STRIP ── */
+    #question-strip {
+      background: linear-gradient(90deg, rgba(14,30,100,0.5), rgba(30,14,80,0.5), rgba(14,30,100,0.5));
+      border: 2px solid rgba(255,215,0,0.3);
+      border-radius: 12px;
+      padding: 0.9rem 1.2rem;
+      text-align: center;
+    }
+
+    /* ── CONTROLS PANEL ── */
+    .controls-panel {
+      background: rgba(6,8,30,0.75);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.3); border-radius: 3px; }
+
+    /* winner confetti badge */
+    .winner-badge {
+      background: linear-gradient(135deg, #ffd700, #ff8c00);
+      color: #000;
+      font-weight: 700;
+      border-radius: 6px;
+      padding: 1px 8px;
+      font-size: 0.7rem;
+      letter-spacing: .08em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ================================================================
+     STRIKE SPLASH OVERLAY
+================================================================ -->
+<div id="strike-splash">
+  <div id="strike-splash-x">✗</div>
+</div>
+
+<!-- ================================================================
+     SETUP MODAL
+================================================================ -->
+<div id="setup-modal" class="modal-bg">
+  <div class="modal-card">
+    <h1 class="neon-gold text-center font-black tracking-widest mb-0" style="font-size:2.4rem">FAMILY FEUD</h1>
+    <p class="text-center text-purple-300 tracking-widest mb-7" style="font-size:.8rem">★ AFTER DARK EDITION ★</p>
+
+    <div class="space-y-4 mb-7">
+      <div>
+        <div class="field-label">Team 1 Name</div>
+        <input id="inp-t1" class="field-input" type="text" placeholder="e.g. The Chaos Gremlins" maxlength="22" />
+      </div>
+      <div>
+        <div class="field-label">Team 2 Name</div>
+        <input id="inp-t2" class="field-input" type="text" placeholder="e.g. Disaster Adults" maxlength="22" />
+      </div>
+    </div>
+
+    <button class="btn btn-gold w-full py-3 text-lg tracking-widest" onclick="startGame()">
+      🎰 &nbsp;START THE GAME
+    </button>
+    <p class="text-center text-gray-600 mt-4" style="font-size:.72rem">20 questions · Dark humor · Adults only</p>
+  </div>
+</div>
+
+<!-- ================================================================
+     RESET CONFIRM MODAL
+================================================================ -->
+<div id="reset-modal" class="modal-bg hidden">
+  <div class="modal-card" style="max-width:340px; text-align:center">
+    <div style="font-size:3rem" class="mb-3">⚠️</div>
+    <h2 class="text-red-400 font-bold mb-2" style="font-size:1.5rem">Reset Everything?</h2>
+    <p class="text-gray-400 mb-6" style="font-size:.9rem">All scores will be wiped. Back to round 1.</p>
+    <div class="flex gap-3">
+      <button class="btn btn-red flex-1 py-3" onclick="confirmReset()">Yes, Nuke It</button>
+      <button class="btn btn-blue flex-1 py-3" onclick="closeResetModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     WINNER MODAL
+================================================================ -->
+<div id="winner-modal" class="modal-bg hidden">
+  <div class="modal-card" style="text-align:center">
+    <div style="font-size:3.5rem" class="mb-2">🏆</div>
+    <h2 class="neon-gold font-black tracking-widest mb-1" style="font-size:2rem">GAME OVER</h2>
+    <p id="winner-text" class="text-purple-200 mb-6" style="font-size:1.1rem"></p>
+    <div class="flex gap-2 justify-center flex-wrap">
+      <button class="btn btn-gold px-8 py-3" onclick="confirmReset()">Play Again</button>
+      <button class="btn btn-gray px-6 py-3" onclick="document.getElementById('winner-modal').classList.add('hidden')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     MAIN GAME LAYOUT
+================================================================ -->
+<div id="game" class="hidden flex flex-col" style="min-height:100vh">
+
+  <!-- ── HEADER ── -->
+  <header class="border-b border-yellow-900 border-opacity-40 py-2 px-4" style="background:rgba(0,0,0,0.4)">
+    <div class="max-w-5xl mx-auto flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="neon-gold font-black tracking-widest" style="font-size:1.4rem">FAMILY FEUD</span>
+        <span class="text-purple-400 hidden sm:inline" style="font-size:.75rem; letter-spacing:.1em">AFTER DARK</span>
+      </div>
+      <div class="flex items-center gap-3 text-sm">
+        <span class="text-gray-500 tracking-widest" style="font-size:.78rem">
+          Q&nbsp;<span id="hdr-q" class="neon-gold font-bold">1</span>&nbsp;/&nbsp;<span class="text-gray-400">20</span>
+        </span>
+        <button class="btn btn-gray px-3 py-1" style="font-size:.7rem" onclick="showWinner()">Results</button>
+        <button class="btn btn-red px-3 py-1" style="font-size:.7rem" onclick="openResetModal()">Reset</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── SCOREBOARDS + BANK ── -->
+  <div class="max-w-5xl mx-auto w-full px-3 pt-3 pb-1 grid gap-2" style="grid-template-columns:1fr auto 1fr">
+
+    <!-- Team 1 -->
+    <div class="score-box p-3 flex flex-col items-center gap-1">
+      <div id="t1-name" class="text-yellow-300 font-bold truncate max-w-full" style="font-size:.8rem; letter-spacing:.1em">TEAM 1</div>
+      <div id="t1-score" class="score-val">0</div>
+      <button class="btn btn-gold w-full mt-1" style="font-size:.75rem; padding:.3rem .6rem" onclick="awardTeam(1)">
+        Award Points
+      </button>
+    </div>
+
+    <!-- Round Bank (center) -->
+    <div class="bank-box p-3 flex flex-col items-center justify-between gap-1" style="min-width:110px">
+      <div class="text-purple-300 font-bold" style="font-size:.72rem; letter-spacing:.12em">ROUND BANK</div>
+      <div id="bank-val" class="font-black text-purple-200" style="font-size:2.4rem; line-height:1">0</div>
+      <button class="btn btn-gray w-full" style="font-size:.72rem; padding:.25rem .5rem" onclick="discardBank()">Discard</button>
+    </div>
+
+    <!-- Team 2 -->
+    <div class="score-box p-3 flex flex-col items-center gap-1">
+      <div id="t2-name" class="text-yellow-300 font-bold truncate max-w-full" style="font-size:.8rem; letter-spacing:.1em">TEAM 2</div>
+      <div id="t2-score" class="score-val">0</div>
+      <button class="btn btn-gold w-full mt-1" style="font-size:.75rem; padding:.3rem .6rem" onclick="awardTeam(2)">
+        Award Points
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ── QUESTION ── -->
+  <div class="max-w-5xl mx-auto w-full px-3 pt-2 pb-0">
+    <div id="question-strip">
+      <div class="text-yellow-500 mb-1" style="font-size:.7rem; letter-spacing:.15em">SURVEY SAYS...</div>
+      <div id="q-text" class="font-bold leading-snug" style="font-size:clamp(.95rem,2.6vw,1.3rem); color:#e8e8ff"></div>
+    </div>
+  </div>
+
+  <!-- ── STRIKES ── -->
+  <div class="max-w-5xl mx-auto w-full px-3 pt-2 flex justify-center gap-5">
+    <span id="s1" class="strike-dot">✗</span>
+    <span id="s2" class="strike-dot">✗</span>
+    <span id="s3" class="strike-dot">✗</span>
+  </div>
+
+  <!-- ── ANSWER GRID ── -->
+  <div id="answer-grid" class="max-w-5xl mx-auto w-full px-3 pt-3 grid gap-2">
+    <!-- injected by JS -->
+  </div>
+
+  <!-- ── HOST CONTROLS ── -->
+  <div class="max-w-5xl mx-auto w-full px-3 py-3 mt-auto">
+    <div class="controls-panel p-4">
+      <div class="text-gray-600 mb-3 tracking-widest" style="font-size:.7rem">HOST CONTROLS</div>
+
+      <!-- Guess row -->
+      <div class="flex gap-2 flex-wrap sm:flex-nowrap mb-2">
+        <input id="guess-inp" class="guess-input flex-1" type="text" placeholder="Type a guess, press Enter…" autocomplete="off"
+               onkeydown="handleGuessKey(event)" />
+        <button class="btn btn-gold whitespace-nowrap px-5" onclick="submitGuess()">Check It</button>
+        <button class="btn btn-red whitespace-nowrap px-5" onclick="addStrike()">✗ Strike</button>
+      </div>
+
+      <!-- Feedback line -->
+      <div id="feedback" class="text-center font-bold mb-3" style="min-height:1.4rem; font-size:.9rem"></div>
+
+      <!-- Navigation row -->
+      <div class="flex gap-2 justify-center flex-wrap">
+        <button class="btn btn-blue px-5" onclick="prevQ()">◀ Prev</button>
+        <button class="btn btn-purple px-5" onclick="revealAll()">Reveal All</button>
+        <button class="btn btn-blue px-5" onclick="nextQ()">Next ▶</button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /#game -->
+
+<!-- ================================================================
+     JAVASCRIPT
+================================================================ -->
+<script>
+// ─────────────────────────────────────────────────────────────────
+// QUESTION DATABASE  (20 questions, dark/edgy/SFW humor)
+// ─────────────────────────────────────────────────────────────────
+const QUESTIONS = [
+  {
+    q: "Name something your therapist has probably said about your family.",
+    answers: [
+      { t: "That's deeply traumatic",        p: 34 },
+      { t: "Classic boundary issues",         p: 24 },
+      { t: "Classic enabler behavior",        p: 17 },
+      { t: "We need more sessions",           p: 12 },
+      { t: "Your mother is the root cause",   p:  8 },
+      { t: "Have you tried journaling?",      p:  5 },
+    ]
+  },
+  {
+    q: "We asked 100 divorced people: What's the ONE thing you don't miss?",
+    answers: [
+      { t: "The in-laws",                           p: 38 },
+      { t: "Sharing the remote",                    p: 22 },
+      { t: "Being asked where I've been",           p: 16 },
+      { t: "Their cooking",                         p: 11 },
+      { t: "Pretending to like their friends",      p:  8 },
+      { t: "Coordinating vacations",                p:  5 },
+    ]
+  },
+  {
+    q: "Name a reason a normal person might fake their own death.",
+    answers: [
+      { t: "Student loan debt",              p: 40 },
+      { t: "Family reunion coming up",       p: 25 },
+      { t: "Unbearable job",                 p: 15 },
+      { t: "Toxic ex won't leave them alone",p: 10 },
+      { t: "Group chat obligations",         p:  7 },
+      { t: "Their own wedding day",          p:  3 },
+    ]
+  },
+  {
+    q: "Name something people absolutely lie about on their dating profile.",
+    answers: [
+      { t: "Height",                          p: 36 },
+      { t: "Age",                             p: 28 },
+      { t: "Job and income",                  p: 18 },
+      { t: "Photos are 10 years old",         p: 11 },
+      { t: "Loving the outdoors",             p:  5 },
+      { t: "Being laid back",                 p:  2 },
+    ]
+  },
+  {
+    q: "Name something you do at 2 AM that you'd be embarrassed to admit.",
+    answers: [
+      { t: "Doom-scroll social media",        p: 32 },
+      { t: "Eat everything in the fridge",    p: 24 },
+      { t: "Stalk an ex online",              p: 19 },
+      { t: "Regret online shopping",          p: 13 },
+      { t: "Cry for absolutely no reason",    p:  8 },
+      { t: "Watch reality TV alone",          p:  4 },
+    ]
+  },
+  {
+    q: "Name something a supervillain and a middle manager have in common.",
+    answers: [
+      { t: "Love of useless monologuing",     p: 35 },
+      { t: "Pointless mandatory meetings",    p: 25 },
+      { t: "Minions who do all the work",     p: 19 },
+      { t: "Never held accountable",          p: 12 },
+      { t: "World domination goals / KPIs",   p:  6 },
+      { t: "Terrible fashion choices",        p:  3 },
+    ]
+  },
+  {
+    q: "Name something you'd do at a wedding when you secretly hate the couple.",
+    answers: [
+      { t: "Drink heavily",                   p: 37 },
+      { t: "Bet on how long it lasts",        p: 26 },
+      { t: "Avoid all eye contact",           p: 16 },
+      { t: "Leave early with a fake excuse",  p: 12 },
+      { t: "Bring a terrible gift",           p:  6 },
+      { t: "Ruin the Spotify playlist",       p:  3 },
+    ]
+  },
+  {
+    q: "Name a phrase that sounds motivational but is actually terrible advice.",
+    answers: [
+      { t: "Follow your passion",             p: 38 },
+      { t: "Quit your job and travel",        p: 27 },
+      { t: "You only live once",              p: 17 },
+      { t: "Everything happens for a reason", p: 11 },
+      { t: "Just be yourself",                p:  5 },
+      { t: "Money can't buy happiness",       p:  2 },
+    ]
+  },
+  {
+    q: "Name something people pretend to understand but absolutely don't.",
+    answers: [
+      { t: "The stock market",                p: 35 },
+      { t: "Wine tasting",                    p: 24 },
+      { t: "Modern art at a museum",          p: 18 },
+      { t: "Their own car engine",            p: 12 },
+      { t: "Cricket rules",                   p:  7 },
+      { t: "Their own insurance plan",        p:  4 },
+    ]
+  },
+  {
+    q: "Name something that would immediately ruin a first date.",
+    answers: [
+      { t: "Talking about the ex non-stop",   p: 36 },
+      { t: "Showing up with your parents",    p: 28 },
+      { t: "Staring at your phone the whole time", p: 16 },
+      { t: "Mentioning marriage on date one", p: 11 },
+      { t: "Dine-and-dash attempt",           p:  6 },
+      { t: "Intense unprovoked political rant",p:  3 },
+    ]
+  },
+  {
+    q: "Name something adults do that would terrify children if they fully understood it.",
+    answers: [
+      { t: "Paying taxes",                    p: 32 },
+      { t: "Mortgage payments for 30 years",  p: 26 },
+      { t: "Sitting through work meetings",   p: 20 },
+      { t: "Doing small talk at parties",     p: 12 },
+      { t: "Reading the news daily",          p:  7 },
+      { t: "Finding out Santa was fake",      p:  3 },
+    ]
+  },
+  {
+    q: "Name a red flag in someone's apartment a date would immediately notice.",
+    answers: [
+      { t: "Literally no furniture",          p: 34 },
+      { t: "Shrine dedicated to an ex",       p: 26 },
+      { t: "Suspicious number of locks",      p: 18 },
+      { t: "One fork, one plate, one cup",    p: 12 },
+      { t: "Large taxidermy collection",      p:  7 },
+      { t: "Whiteboard full of cryptic plans",p:  3 },
+    ]
+  },
+  {
+    q: "Name something people say at a funeral that they probably shouldn't.",
+    answers: [
+      { t: "He's in a better place now",       p: 33 },
+      { t: "At least the suffering is over",  p: 24 },
+      { t: "So... who gets the house?",       p: 18 },
+      { t: "I never actually liked him",      p: 13 },
+      { t: "This is great for my parking karma", p: 8 },
+      { t: "Who's hungry after this?",        p:  4 },
+    ]
+  },
+  {
+    q: "Name something a time traveler from 1990 would be most unprepared for today.",
+    answers: [
+      { t: "Subscription fees for everything",p: 35 },
+      { t: "Everyone staring at phones",      p: 25 },
+      { t: "The concept of influencers",      p: 18 },
+      { t: "Avocado toast costing $22",       p: 12 },
+      { t: "Getting canceled for old opinions",p:  7 },
+      { t: "Smoking banned absolutely everywhere", p: 3 },
+    ]
+  },
+  {
+    q: "Name something your GPS would say if it had feelings about your driving.",
+    answers: [
+      { t: "I literally told you to turn left", p: 37 },
+      { t: "Recalculating... again...",         p: 27 },
+      { t: "You really came here at 3 AM?",     p: 17 },
+      { t: "This neighborhood is a bold choice",p: 11 },
+      { t: "You've passed it four times now",   p:  6 },
+      { t: "I quit. You're on your own.",        p:  2 },
+    ]
+  },
+  {
+    q: "Name something you'd find in a real supervillain's Amazon cart.",
+    answers: [
+      { t: "Bulk zip ties",                   p: 38 },
+      { t: "Industrial chest freezer",        p: 26 },
+      { t: "White cat for stroking ominously",p: 17 },
+      { t: "Monogrammed black turtleneck",    p: 11 },
+      { t: "Fog machine (Prime delivery)",    p:  5 },
+      { t: "Self-destruct button",            p:  3 },
+    ]
+  },
+  {
+    q: "Name something you'd overhear at a Rock Bottom Support Group.",
+    answers: [
+      { t: "I bought a boat",                 p: 32 },
+      { t: "I texted them back at 3 AM",      p: 25 },
+      { t: "I quit my job to become a DJ",    p: 19 },
+      { t: "I ate 6 burritos and sobbed",     p: 13 },
+      { t: "I spent rent money on crystals",  p:  8 },
+      { t: "Matching tattoos on date two",    p:  3 },
+    ]
+  },
+  {
+    q: "Name something technically legal that absolutely should be a crime.",
+    answers: [
+      { t: "Loud open-mouth chewing",         p: 35 },
+      { t: "Reclining your airplane seat",    p: 27 },
+      { t: "Ghosting someone after 3 months", p: 18 },
+      { t: "Autoplay videos with sound on",   p: 11 },
+      { t: "Replying 'K' to a long message",  p:  6 },
+      { t: "Spoiling a movie in the title",   p:  3 },
+    ]
+  },
+  {
+    q: "Name something your phone's AI knows about you that it should keep secret.",
+    answers: [
+      { t: "What you search at midnight",               p: 38 },
+      { t: "Every embarrassing selfie ever taken",      p: 24 },
+      { t: "How many times you played that sad song",   p: 17 },
+      { t: "Angry texts you drafted but never sent",    p: 12 },
+      { t: "How often you ignore calls from mom",       p:  6 },
+      { t: "Your complete location history",            p:  3 },
+    ]
+  },
+  {
+    q: "Name a sign that your life is basically a reality TV show.",
+    answers: [
+      { t: "Nothing works unless someone's watching",   p: 34 },
+      { t: "You have a confessional in the bathroom",   p: 26 },
+      { t: "Every exit involves a dramatic speech",     p: 18 },
+      { t: "Your friends are secretly being cast",      p: 12 },
+      { t: "You check your ratings before decisions",   p:  7 },
+      { t: "There's a rose ceremony at family dinner",  p:  3 },
+    ]
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────────────────
+let G = {
+  t1Name: 'Team 1', t2Name: 'Team 2',
+  t1Score: 0,       t2Score: 0,
+  curQ: 0,
+  strikes: 0,
+  bank: 0,
+  revealed: [],   // bool[]
+};
+
+// ─────────────────────────────────────────────────────────────────
+// START
+// ─────────────────────────────────────────────────────────────────
+function startGame() {
+  G.t1Name = (document.getElementById('inp-t1').value.trim() || 'Team 1').toUpperCase();
+  G.t2Name = (document.getElementById('inp-t2').value.trim() || 'Team 2').toUpperCase();
+  document.getElementById('t1-name').textContent = G.t1Name;
+  document.getElementById('t2-name').textContent = G.t2Name;
+  document.getElementById('setup-modal').classList.add('hidden');
+  document.getElementById('game').classList.remove('hidden');
+  loadQ(0);
+}
+
+// ─────────────────────────────────────────────────────────────────
+// LOAD QUESTION
+// ─────────────────────────────────────────────────────────────────
+function loadQ(idx) {
+  if (idx < 0 || idx >= QUESTIONS.length) return;
+  G.curQ  = idx;
+  G.strikes = 0;
+  G.bank    = 0;
+  const q   = QUESTIONS[idx];
+  G.revealed = new Array(q.answers.length).fill(false);
+
+  document.getElementById('hdr-q').textContent = idx + 1;
+  document.getElementById('q-text').textContent = q.q;
+  document.getElementById('guess-inp').value = '';
+  setFeedback('', '');
+  updateBank();
+  renderStrikes();
+  renderGrid();
+}
+
+// ─────────────────────────────────────────────────────────────────
+// RENDER GRID
+// ─────────────────────────────────────────────────────────────────
+function renderGrid() {
+  const q    = QUESTIONS[G.curQ];
+  const grid = document.getElementById('answer-grid');
+  const n    = q.answers.length;
+
+  // Choose column layout
+  let cols;
+  if      (n <= 2) cols = 'grid-cols-1 sm:grid-cols-2';
+  else if (n <= 4) cols = 'grid-cols-2';
+  else if (n <= 6) cols = 'grid-cols-2 sm:grid-cols-3';
+  else             cols = 'grid-cols-2 sm:grid-cols-4';
+
+  grid.className = `max-w-5xl mx-auto w-full px-3 pt-3 grid gap-2 ${cols}`;
+  grid.innerHTML = '';
+
+  q.answers.forEach((ans, i) => {
+    const div = document.createElement('div');
+    div.className = `card-wrap${G.revealed[i] ? ' flipped' : ''}`;
+    div.id = `card-${i}`;
+    div.style.height = '80px';
+    div.style.cursor = 'pointer';
+    div.title = 'Click to manually reveal';
+    div.onclick = () => manualReveal(i);
+
+    div.innerHTML = `
+      <div class="card-inner">
+        <div class="card-face card-front">
+          <span style="font-size:1.8rem; font-weight:900; color:#ffd700">${i + 1}</span>
+        </div>
+        <div class="card-face card-back">
+          <span style="font-size:clamp(.7rem,2vw,.95rem); font-weight:600; color:#e8e8ff; line-height:1.2">${ans.t}</span>
+          <span style="font-size:1.05rem; font-weight:900; color:#ffd700; margin-top:3px">${ans.p} pts</span>
+        </div>
+      </div>`;
+    grid.appendChild(div);
+  });
+}
+
+function manualReveal(i) {
+  if (!G.revealed[i]) revealCard(i, true);
+}
+
+// ─────────────────────────────────────────────────────────────────
+// REVEAL A CARD
+// ─────────────────────────────────────────────────────────────────
+function revealCard(i, addToBank) {
+  if (G.revealed[i]) return;
+  G.revealed[i] = true;
+  const el = document.getElementById(`card-${i}`);
+  if (!el) return;
+  el.classList.add('flipped');
+  // Flash animation after flip completes
+  setTimeout(() => {
+    el.classList.add('reveal-flash');
+    setTimeout(() => el.classList.remove('reveal-flash'), 900);
+  }, 300);
+
+  if (addToBank) {
+    G.bank += QUESTIONS[G.curQ].answers[i].p;
+    updateBank();
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// GUESS LOGIC
+// ─────────────────────────────────────────────────────────────────
+function handleGuessKey(e) { if (e.key === 'Enter') submitGuess(); }
+
+function submitGuess() {
+  const raw   = document.getElementById('guess-inp').value.trim();
+  const guess = raw.toLowerCase();
+  if (!guess) return;
+
+  const q = QUESTIONS[G.curQ];
+  let found = -1;
+
+  for (let i = 0; i < q.answers.length; i++) {
+    if (G.revealed[i]) continue;
+    if (isMatch(guess, q.answers[i].t.toLowerCase())) { found = i; break; }
+  }
+
+  if (found >= 0) {
+    revealCard(found, true);
+    setFeedback(`✓ Survey says! +${q.answers[found].p} points`, 'color:#4ade80');
+  } else {
+    setFeedback('✗ Not on the board!', 'color:#f87171');
+  }
+  document.getElementById('guess-inp').value = '';
+  document.getElementById('guess-inp').focus();
+}
+
+function isMatch(guess, answer) {
+  if (answer.includes(guess) || guess.includes(answer)) return true;
+  // Word-level fuzzy
+  const gw = guess.split(/\s+/).filter(w => w.length > 2);
+  const aw = answer.split(/\s+/).filter(w => w.length > 2);
+  for (const g of gw) {
+    for (const a of aw) {
+      if (a.includes(g) || g.includes(a)) return true;
+      if (g.length > 4 && a.length > 4 && lev(g, a) <= 2) return true;
+    }
+  }
+  return false;
+}
+
+function lev(a, b) {
+  const m = a.length, n = b.length;
+  const d = Array.from({length: m+1}, (_, i) => Array.from({length: n+1}, (_, j) => j === 0 ? i : 0));
+  for (let j = 1; j <= n; j++) d[0][j] = j;
+  for (let i = 1; i <= m; i++)
+    for (let j = 1; j <= n; j++)
+      d[i][j] = a[i-1] === b[j-1] ? d[i-1][j-1] : 1 + Math.min(d[i-1][j], d[i][j-1], d[i-1][j-1]);
+  return d[m][n];
+}
+
+// ─────────────────────────────────────────────────────────────────
+// STRIKES
+// ─────────────────────────────────────────────────────────────────
+function addStrike() {
+  if (G.strikes >= 3) return;
+  G.strikes++;
+  renderStrikes();
+  splashStrike();
+}
+
+function renderStrikes() {
+  for (let i = 1; i <= 3; i++) {
+    const el = document.getElementById(`s${i}`);
+    el.className = 'strike-dot' + (i <= G.strikes ? ' lit' : '');
+  }
+}
+
+function splashStrike() {
+  const sp = document.getElementById('strike-splash');
+  sp.classList.add('show');
+  setTimeout(() => sp.classList.remove('show'), 650);
+}
+
+// ─────────────────────────────────────────────────────────────────
+// SCORING
+// ─────────────────────────────────────────────────────────────────
+function awardTeam(t) {
+  if (G.bank === 0) { setFeedback('Nothing in the bank!', 'color:#facc15'); return; }
+  if (t === 1) { G.t1Score += G.bank; animScore('t1-score'); }
+  else         { G.t2Score += G.bank; animScore('t2-score'); }
+  G.bank = 0;
+  updateBank();
+  updateScores();
+  setFeedback(`+${G.bank === 0 ? '' : G.bank} awarded to ${t === 1 ? G.t1Name : G.t2Name}!`, 'color:#ffd700');
+}
+
+function discardBank() {
+  G.bank = 0;
+  updateBank();
+  setFeedback('Points discarded.', 'color:#6b7280');
+}
+
+function updateBank()   { document.getElementById('bank-val').textContent  = G.bank; }
+function updateScores() {
+  document.getElementById('t1-score').textContent = G.t1Score;
+  document.getElementById('t2-score').textContent = G.t2Score;
+}
+function animScore(id) {
+  const el = document.getElementById(id);
+  el.classList.remove('pulse');
+  void el.offsetWidth; // reflow
+  el.classList.add('pulse');
+}
+
+// ─────────────────────────────────────────────────────────────────
+// FEEDBACK
+// ─────────────────────────────────────────────────────────────────
+let _fbTimer = null;
+function setFeedback(msg, style) {
+  const el = document.getElementById('feedback');
+  el.textContent = msg;
+  el.setAttribute('style', style);
+  clearTimeout(_fbTimer);
+  if (msg) _fbTimer = setTimeout(() => { el.textContent = ''; }, 3000);
+}
+
+// ─────────────────────────────────────────────────────────────────
+// NAVIGATION
+// ─────────────────────────────────────────────────────────────────
+function prevQ()      { loadQ(G.curQ - 1); }
+function nextQ()      { loadQ(G.curQ + 1); }
+function revealAll()  {
+  QUESTIONS[G.curQ].answers.forEach((_, i) => {
+    if (!G.revealed[i]) setTimeout(() => revealCard(i, false), i * 200);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────────
+// RESET
+// ─────────────────────────────────────────────────────────────────
+function openResetModal()  { document.getElementById('reset-modal').classList.remove('hidden'); }
+function closeResetModal() { document.getElementById('reset-modal').classList.add('hidden'); }
+function confirmReset() {
+  closeResetModal();
+  document.getElementById('winner-modal').classList.add('hidden');
+  G.t1Score = 0; G.t2Score = 0;
+  updateScores();
+  loadQ(0);
+}
+
+// ─────────────────────────────────────────────────────────────────
+// WINNER SCREEN
+// ─────────────────────────────────────────────────────────────────
+function showWinner() {
+  const modal = document.getElementById('winner-modal');
+  const txt   = document.getElementById('winner-text');
+  const s1 = G.t1Score, s2 = G.t2Score;
+  let msg;
+  if (s1 > s2)       msg = `${G.t1Name} wins with ${s1} points! 🏆`;
+  else if (s2 > s1)  msg = `${G.t2Name} wins with ${s2} points! 🏆`;
+  else               msg = `It's a tie! Both teams scored ${s1} points. A rematch is required. ⚔️`;
+  txt.textContent = msg;
+  modal.classList.remove('hidden');
+}
+
+// ─────────────────────────────────────────────────────────────────
+// KEYBOARD SHORTCUT: Enter on team name input to start
+// ─────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  ['inp-t1','inp-t2'].forEach(id =>
+    document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') startGame(); })
+  );
+});
+</script>
+</body>
+</html>
