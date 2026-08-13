@@ -466,199 +466,126 @@ function connectDisplay_btn() {
 const QUESTIONS = [
 
   // ── CLASSIC (15) ──────────────────────────────────────────
-  {cat:'classic',q:"Name something your therapist has probably said about your family.",answers:[
-    {t:"Deeply traumatic",p:34},{t:"Boundary issues",p:24},{t:"Enabler behavior",p:17},
-    {t:"Need more sessions",p:12},{t:"Your mother",p:8},{t:"Try journaling",p:5}]},
+  {cat:'classic',q:"Name a place where you are supposed to be quiet.",answers:[
+    {t:"Library",p:55},{t:"Church",p:22},{t:"Movie Theater",p:12},
+    {t:"Hospital",p:6},{t:"Courtroom",p:3},{t:"Museum",p:2}]},
 
-  {cat:'classic',q:"We asked 100 divorced people: What's the ONE thing you don't miss?",answers:[
-    {t:"The in-laws",p:38},{t:"Sharing the remote",p:22},{t:"Being questioned",p:16},
-    {t:"Their cooking",p:11},{t:"Their friends",p:8},{t:"Coordinating trips",p:5}]},
+  {cat:'classic',q:"Name a reason people might be late for work.",answers:[
+    {t:"Traffic",p:42},{t:"Overslept",p:30},{t:"Car Trouble",p:12},
+    {t:"Bad Weather",p:8},{t:"Kids",p:5},{t:"Public Transit",p:3}]},
 
-  {cat:'classic',q:"Name a reason a normal person might fake their own death.",answers:[
-    {t:"Student loans",p:40},{t:"Family reunion",p:25},{t:"Terrible job",p:15},
-    {t:"Toxic ex",p:10},{t:"Group chat",p:7},{t:"Their own wedding",p:3}]},
+  {cat:'classic',q:"Name something you associate with Superman.",answers:[
+    {t:"Cape",p:45},{t:"Lois Lane",p:20},{t:"Flying",p:15},
+    {t:"Clark Kent",p:10},{t:"Kryptonite",p:7},{t:"'S' on Chest",p:3}]},
 
-  {cat:'classic',q:"Name something people absolutely lie about on their dating profile.",answers:[
-    {t:"Height",p:36},{t:"Age",p:28},{t:"Their job",p:18},
-    {t:"Old photos",p:11},{t:"Loving outdoors",p:5},{t:"Being laid back",p:2}]},
+  {cat:'classic',q:"Name a food you can eat with your hands.",answers:[
+    {t:"Pizza",p:35},{t:"French Fries",p:22},{t:"Hamburger",p:18},
+    {t:"Fried Chicken",p:12},{t:"Hot Dog",p:8},{t:"Taco",p:5}]},
 
-  {cat:'classic',q:"Name something you do at 2 AM that you'd be embarrassed to admit.",answers:[
-    {t:"Doom-scrolling",p:32},{t:"Stress eating",p:24},{t:"Stalking an ex",p:19},
-    {t:"Regret shopping",p:13},{t:"Crying",p:8},{t:"Reality TV",p:4}]},
+  {cat:'classic',q:"Name a popular New Year's resolution.",answers:[
+    {t:"Lose Weight/Diet",p:40},{t:"Exercise More",p:25},{t:"Save Money",p:15},
+    {t:"Quit Smoking",p:10},{t:"Eat Healthier",p:7},{t:"Drink Less",p:3}]},
 
-  {cat:'classic',q:"Name something you'd do at a wedding when you secretly hate the couple.",answers:[
-    {t:"Drink heavily",p:37},{t:"Bet on divorce",p:26},{t:"Avoid eye contact",p:16},
-    {t:"Leave early",p:12},{t:"Bad gift",p:6},{t:"Ruin the playlist",p:3}]},
+  {cat:'classic',q:"Name something people do at a football game.",answers:[
+    {t:"Cheer/Yell",p:38},{t:"Drink Beer",p:24},{t:"Eat Hot Dogs",p:18},
+    {t:"Tailgate",p:10},{t:"Do The Wave",p:6},{t:"Wear Team Colors",p:4}]},
 
-  {cat:'classic',q:"Name a phrase that sounds motivational but is actually terrible advice.",answers:[
-    {t:"Follow your passion",p:38},{t:"Quit and travel",p:27},{t:"YOLO",p:17},
-    {t:"Everything happens for a reason",p:11},{t:"Just be yourself",p:5},{t:"Money can't buy happiness",p:2}]},
+  {cat:'classic',q:"Name something that melts.",answers:[
+    {t:"Ice/Ice Cream",p:45},{t:"Snow",p:25},{t:"Butter",p:15},
+    {t:"Cheese",p:8},{t:"Plastic",p:4},{t:"Chocolate",p:3}]},
 
-  {cat:'classic',q:"Name something people pretend to understand but absolutely don't.",answers:[
-    {t:"The stock market",p:35},{t:"Wine tasting",p:24},{t:"Modern art",p:18},
-    {t:"Their car engine",p:12},{t:"Cricket",p:7},{t:"Their insurance",p:4}]},
+  {cat:'classic',q:"Name something you find in a bathroom.",answers:[
+    {t:"Toilet/Toilet Paper",p:40},{t:"Sink",p:20},{t:"Soap",p:15},
+    {t:"Towel",p:12},{t:"Shower/Tub",p:8},{t:"Toothbrush",p:5}]},
 
-  {cat:'classic',q:"Name something that would immediately ruin a first date.",answers:[
-    {t:"Talking about the ex",p:36},{t:"Showing up with parents",p:28},{t:"Staring at your phone",p:16},
-    {t:"Mentioning marriage",p:11},{t:"Dine-and-dash",p:6},{t:"Unprovoked rant",p:3}]},
+  {cat:'classic',q:"Name an animal with horns.",answers:[
+    {t:"Bull/Cow",p:35},{t:"Rhino",p:25},{t:"Ram/Sheep",p:15},
+    {t:"Goat",p:12},{t:"Deer",p:8},{t:"Unicorn",p:5}]},
 
-  {cat:'classic',q:"Name something people say at a funeral that they probably shouldn't.",answers:[
-    {t:"Better place now",p:33},{t:"Suffering is over",p:24},{t:"Who gets the house?",p:18},
-    {t:"Never liked him",p:13},{t:"Who's hungry?",p:8},{t:"Great networking",p:4}]},
+  {cat:'classic',q:"Name something that has a shell.",answers:[
+    {t:"Turtle",p:38},{t:"Egg",p:25},{t:"Snail",p:15},
+    {t:"Crab",p:10},{t:"Clam/Oyster",p:7},{t:"Nut",p:5}]},
 
-  {cat:'classic',q:"Name something a time traveler from 1990 would be most unprepared for today.",answers:[
-    {t:"Subscription fees",p:35},{t:"Everyone on phones",p:25},{t:"Influencers",p:18},
-    {t:"$22 toast",p:12},{t:"Getting canceled",p:7},{t:"No indoor smoking",p:3}]},
+  {cat:'classic',q:"Name something you buy by the roll.",answers:[
+    {t:"Toilet Paper",p:45},{t:"Paper Towels",p:25},{t:"Tape",p:15},
+    {t:"Coins",p:8},{t:"Wrapping Paper",p:5},{t:"Bread/Rolls",p:2}]},
 
-  {cat:'classic',q:"Name something your GPS would say if it had feelings about your driving.",answers:[
-    {t:"I said turn left",p:37},{t:"Recalculating again",p:27},{t:"Why are you here?",p:17},
-    {t:"You passed it again",p:11},{t:"Bold choice",p:6},{t:"I quit",p:2}]},
+  {cat:'classic',q:"Name a month that has exactly 30 days.",answers:[
+    {t:"September",p:35},{t:"November",p:30},{t:"April",p:20},
+    {t:"June",p:15}]},
 
-  {cat:'classic',q:"Name something technically legal that absolutely should be a crime.",answers:[
-    {t:"Loud chewing",p:35},{t:"Reclining your seat",p:27},{t:"Ghosting",p:18},
-    {t:"Autoplay sound",p:11},{t:"Replying 'K'",p:6},{t:"Movie spoilers",p:3}]},
+  {cat:'classic',q:"Name a profession that requires you to wear a uniform.",answers:[
+    {t:"Police Officer",p:40},{t:"Firefighter",p:25},{t:"Nurse/Doctor",p:15},
+    {t:"Military",p:12},{t:"Pilot",p:5},{t:"Chef",p:3}]},
 
-  {cat:'classic',q:"Name something your phone's AI knows about you that it should keep secret.",answers:[
-    {t:"Midnight searches",p:38},{t:"Embarrassing selfies",p:24},{t:"Sad song count",p:17},
-    {t:"Angry drafts",p:12},{t:"Ignored mom",p:6},{t:"Location history",p:3}]},
+  {cat:'classic',q:"Name a yellow fruit.",answers:[
+    {t:"Banana",p:65},{t:"Lemon",p:20},{t:"Pineapple",p:8},
+    {t:"Mango",p:4},{t:"Starfruit",p:3}]},
 
-  {cat:'classic',q:"Name a sign that your life is basically a reality TV show.",answers:[
-    {t:"Works when watched",p:34},{t:"Dramatic exits",p:26},{t:"Friends are cast",p:18},
-    {t:"Bathroom confessional",p:12},{t:"Checking ratings",p:7},{t:"Rose ceremony",p:3}]},
+  {cat:'classic',q:"Name something people put on a salad.",answers:[
+    {t:"Dressing",p:42},{t:"Croutons",p:25},{t:"Cheese",p:15},
+    {t:"Tomatoes",p:10},{t:"Bacon Bits",p:5},{t:"Onions",p:3}]},
 
-  // ── COLLEGE — ORIGINAL (15) ───────────────────────────────
-  {cat:'college',q:"Name something college students blame their low GPA on.",answers:[
-    {t:"The professor",p:35},{t:"Mental health",p:25},{t:"Working three jobs",p:18},
-    {t:"Social life",p:12},{t:"The pandemic",p:7},{t:"Mercury retrograde",p:3}]},
+  // ── EVERYDAY LIFE (15) ───────────────────────────────
+  {cat:'everyday',q:"Name something you keep in your car's glove compartment.",answers:[
+    {t:"Registration/Insurance",p:45},{t:"Napkins",p:20},{t:"Flashlight",p:15},
+    {t:"Owner's Manual",p:10},{t:"Ketchup Packets",p:7},{t:"Sunglasses",p:3}]},
 
-  {cat:'college',q:"Name the worst place to wake up after a campus party.",answers:[
-    {t:"Library floor",p:34},{t:"Professor's yard",p:26},{t:"Wrong dorm",p:18},
-    {t:"Campus chapel",p:12},{t:"Dining hall",p:7},{t:"Ex's hallway",p:3}]},
+  {cat:'everyday',q:"Name a common excuse for getting out of a ticket.",answers:[
+    {t:"Didn't Realize Speed",p:35},{t:"Emergency/Bathroom",p:25},{t:"Late for Work",p:18},
+    {t:"Wife is in Labor",p:12},{t:"Lost/Looking for Signs",p:6},{t:"Medical Issue",p:4}]},
 
-  {cat:'college',q:"What does a completely broke college student eat for dinner?",answers:[
-    {t:"Instant ramen",p:40},{t:"Stolen dining hall food",p:26},{t:"Gas station hot dog",p:16},
-    {t:"Condiment packets",p:9},{t:"Roommate's food",p:6},{t:"Nothing",p:3}]},
+  {cat:'everyday',q:"Name something you hate to find in your bed.",answers:[
+    {t:"Bugs/Spiders",p:42},{t:"Crumbs",p:28},{t:"Pet Hair",p:15},
+    {t:"Wet Spot",p:8},{t:"Sand",p:5},{t:"Dirty Laundry",p:2}]},
 
-  {cat:'college',q:"Name something you quickly hide when your professor walks past your laptop.",answers:[
-    {t:"Netflix",p:38},{t:"Online shopping",p:25},{t:"Dating app",p:17},
-    {t:"Someone else's essay",p:12},{t:"Meme group chat",p:5},{t:"Job application",p:3}]},
+  {cat:'everyday',q:"Name a chore that people absolutely despise doing.",answers:[
+    {t:"Washing Dishes",p:38},{t:"Folding Laundry",p:25},{t:"Cleaning Toilets",p:18},
+    {t:"Ironing",p:10},{t:"Vacuuming",p:6},{t:"Taking Out Trash",p:3}]},
 
-  {cat:'college',q:"Name something in a dorm room that would absolutely horrify a parent.",answers:[
-    {t:"Empty bottles",p:35},{t:"Biological smell",p:25},{t:"Old dishes",p:18},
-    {t:"Stranger in the bed",p:12},{t:"The GPA",p:7},{t:"Ramen evidence",p:3}]},
+  {cat:'everyday',q:"Name something you do when you have a cold.",answers:[
+    {t:"Blow Nose",p:40},{t:"Sleep/Rest",p:25},{t:"Drink Tea/Soup",p:18},
+    {t:"Take Medicine",p:10},{t:"Cough",p:5},{t:"Complain",p:2}]},
 
-  {cat:'college',q:"Name a lie college students confidently put on their resume.",answers:[
-    {t:"Excel proficient",p:36},{t:"Leadership skills",p:27},{t:"Fluent in Spanish",p:17},
-    {t:"3+ years experience",p:11},{t:"References available",p:6},{t:"Team player",p:3}]},
+  {cat:'everyday',q:"Name something you often lose track of.",answers:[
+    {t:"Time",p:35},{t:"Keys",p:28},{t:"Phone",p:15},
+    {t:"Glasses",p:10},{t:"Remote Control",p:8},{t:"Money",p:4}]},
 
-  {cat:'college',q:"Name what students do in the 10 minutes before a final exam.",answers:[
-    {t:"Panic cram",p:35},{t:"Full meltdown",p:27},{t:"Ask about a curve",p:17},
-    {t:"Text mom",p:11},{t:"Accept failure",p:7},{t:"Find religion",p:3}]},
+  {cat:'everyday',q:"Name something you might find under sofa cushions.",answers:[
+    {t:"Coins",p:45},{t:"Remote Control",p:22},{t:"Crumbs/Food",p:18},
+    {t:"Keys",p:8},{t:"Dust Bunnies",p:5},{t:"Pens",p:2}]},
 
-  {cat:'college',q:"Name a reason a college student emails their professor at 2 AM.",answers:[
-    {t:"Extension request",p:38},{t:"Misread due date",p:26},{t:"Grandma died again",p:17},
-    {t:"Disputing 0.5 points",p:11},{t:"Deep revelation",p:5},{t:"Accidental Reply All",p:3}]},
+  {cat:'everyday',q:"Name something you never leave the house without.",answers:[
+    {t:"Phone",p:48},{t:"Keys",p:25},{t:"Wallet/Purse",p:18},
+    {t:"Sunglasses",p:5},{t:"Chapstick",p:3},{t:"Jacket",p:1}]},
 
-  {cat:'college',q:"Name a reason someone drops their major junior year.",answers:[
-    {t:"Hate the field",p:34},{t:"Job market terror",p:26},{t:"One-star professor",p:18},
-    {t:"Followed a crush",p:12},{t:"TikTok said to",p:7},{t:"Couldn't pass one class",p:3}]},
+  {cat:'everyday',q:"Name a popular ice cream flavor.",answers:[
+    {t:"Vanilla",p:35},{t:"Chocolate",p:30},{t:"Strawberry",p:15},
+    {t:"Mint Chocolate Chip",p:10},{t:"Cookie Dough",p:6},{t:"Rocky Road",p:4}]},
 
-  {cat:'college',q:"Name what students tell their parents student loan money goes toward.",answers:[
-    {t:"Books",p:37},{t:"Groceries",p:27},{t:"School supplies",p:17},
-    {t:"Professional events",p:11},{t:"Transportation",p:5},{t:"Tuition (ironic)",p:3}]},
+  {cat:'everyday',q:"Name something that gets easily tangled.",answers:[
+    {t:"Headphones/Cords",p:40},{t:"Hair",p:30},{t:"Jewelry/Necklaces",p:15},
+    {t:"Christmas Lights",p:8},{t:"Yarn/Thread",p:5},{t:"Fishing Line",p:2}]},
 
-  {cat:'college',q:"Name a place on campus where students go to cry privately.",answers:[
-    {t:"Bathroom stall",p:38},{t:"Back of the library",p:26},{t:"Parked car",p:18},
-    {t:"Counseling waiting room",p:11},{t:"Behind the auditorium",p:4},{t:"Openly in the quad",p:3}]},
+  {cat:'everyday',q:"Name a reason a dog might bark.",answers:[
+    {t:"Stranger/Mailman",p:45},{t:"Another Dog",p:20},{t:"Hungry",p:15},
+    {t:"Wants to Go Out",p:10},{t:"Scared/Loud Noise",p:7},{t:"Playing",p:3}]},
 
-  {cat:'college',q:"Name something a hungover student says during an 8 AM class.",answers:[
-    {t:"Turn off the lights",p:35},{t:"Is this on the exam?",p:25},{t:"Just really tired",p:19},
-    {t:"Do you have water?",p:12},{t:"I think I'm sick",p:6},{t:"Head on desk",p:3}]},
+  {cat:'everyday',q:"Name something people take with them to the beach.",answers:[
+    {t:"Towel",p:35},{t:"Sunscreen",p:25},{t:"Umbrella",p:18},
+    {t:"Chair",p:12},{t:"Cooler",p:7},{t:"Sunglasses",p:3}]},
 
-  {cat:'college',q:"Name something a college student does instead of attending class.",answers:[
-    {t:"Sleep",p:36},{t:"Watch Netflix",p:24},{t:"Copy someone's notes",p:18},
-    {t:"Vague excuse email",p:12},{t:"Study something else",p:7},{t:"Extended brunch",p:3}]},
+  {cat:'everyday',q:"Name something you open.",answers:[
+    {t:"Door",p:40},{t:"Window",p:22},{t:"Book",p:15},
+    {t:"Bottle/Can",p:12},{t:"Mail/Package",p:8},{t:"Your Mouth",p:3}]},
 
-  {cat:'college',q:"Name the worst thing about sharing a college dorm bathroom.",answers:[
-    {t:"Hair everywhere",p:36},{t:"3 AM shower noise",p:25},{t:"No hot water",p:18},
-    {t:"Permanent smell",p:13},{t:"45-minute showers",p:5},{t:"Mandatory flip-flops",p:3}]},
+  {cat:'everyday',q:"Name a tool everyone should have in their house.",answers:[
+    {t:"Hammer",p:45},{t:"Screwdriver",p:25},{t:"Wrench",p:15},
+    {t:"Tape Measure",p:8},{t:"Pliers",p:5},{t:"Flashlight",p:2}]},
 
-  {cat:'college',q:"Name something a college student brags about that's actually embarrassing.",answers:[
-    {t:"Only slept 2 hours",p:35},{t:"Haven't been to class",p:26},{t:"Live on energy drinks",p:18},
-    {t:"Essay in one night",p:12},{t:"Keg stand",p:6},{t:"Never cooked",p:3}]},
-
-  // ── COLLEGE — NEW (18) ────────────────────────────────────
-  {cat:'college',q:"Besides studying, why is a college student up at 4 AM?",answers:[
-    {t:"Scrolling TikTok",p:35},{t:"Existential dread",p:25},{t:"Partying",p:18},
-    {t:"Crying",p:12},{t:"Gaming",p:10}]},
-
-  {cat:'college',q:"Name something you pray your professor doesn't look at during a presentation.",answers:[
-    {t:"Search history",p:40},{t:"My notes",p:22},{t:"My face",p:15},
-    {t:"Open tabs",p:13},{t:"ChatGPT",p:10}]},
-
-  {cat:'college',q:"What's the fastest way to ruin a group project?",answers:[
-    {t:"Ghost the group",p:45},{t:"Do zero work",p:25},{t:"Bad ideas",p:15},
-    {t:"Plagiarize",p:10},{t:"Miss the deadline",p:5}]},
-
-  {cat:'college',q:"Name a terrible meal a broke student considers a luxury.",answers:[
-    {t:"Instant ramen",p:38},{t:"Fast food",p:28},{t:"Cereal",p:16},
-    {t:"Leftover pizza",p:12},{t:"Ice water",p:6}]},
-
-  {cat:'college',q:"What's a major red flag on a student's nightstand?",answers:[
-    {t:"Empty vapes",p:35},{t:"Moldy cups",p:28},{t:"Unopened textbooks",p:18},
-    {t:"Antidepressants",p:12},{t:"Crusty towel",p:7}]},
-
-  {cat:'college',q:"Name something a college student uses as a personality trait.",answers:[
-    {t:"Caffeine addiction",p:32},{t:"Their major",p:26},{t:"Sleep deprivation",p:20},
-    {t:"Being broke",p:14},{t:"Trauma",p:8}]},
-
-  {cat:'college',q:"Name something students do right before a deadline they've had for a month.",answers:[
-    {t:"Panic study",p:38},{t:"Pray",p:22},{t:"Finally start",p:20},
-    {t:"Make excuses",p:12},{t:"Give up",p:8}]},
-
-  {cat:'college',q:"Name a reason a student is broke 3 days after payday.",answers:[
-    {t:"Food delivery",p:35},{t:"Going out",p:28},{t:"Online shopping",p:20},
-    {t:"Ubers",p:12},{t:"Subscriptions",p:5}]},
-
-  {cat:'college',q:"Name what a college student actually does during 'study time'.",answers:[
-    {t:"Scrolling phone",p:38},{t:"Napping",p:26},{t:"Snacking",p:18},
-    {t:"Watching Netflix",p:12},{t:"Chatting",p:6}]},
-
-  {cat:'college',q:"Name something students say right before making a terrible decision.",answers:[
-    {t:"It'll be fine",p:38},{t:"YOLO",p:28},{t:"Just this once",p:18},
-    {t:"Hold my drink",p:10},{t:"Last time",p:6}]},
-
-  {cat:'college',q:"Name a 'study technique' that involves zero actual studying.",answers:[
-    {t:"Color-coding notes",p:35},{t:"Making playlists",p:25},{t:"Organizing the desk",p:20},
-    {t:"Watch summaries",p:14},{t:"Re-reading nothing",p:6}]},
-
-  {cat:'college',q:"Name something a student blames when they fail a test.",answers:[
-    {t:"The professor",p:40},{t:"Not enough sleep",p:28},{t:"Bad luck",p:16},
-    {t:"Too stressed",p:10},{t:"The curve",p:6}]},
-
-  {cat:'college',q:"Name what college students use instead of cooking.",answers:[
-    {t:"Microwave",p:38},{t:"DoorDash",p:28},{t:"Dining hall",p:18},
-    {t:"Roommate's food",p:10},{t:"Skip eating",p:6}]},
-
-  {cat:'college',q:"Name a sign you pulled an all-nighter before class.",answers:[
-    {t:"Yesterday's clothes",p:35},{t:"Hollow eyes",p:25},{t:"Fifth coffee",p:20},
-    {t:"Can't form sentences",p:12},{t:"Randomly crying",p:8}]},
-
-  {cat:'college',q:"Name something students ask classmates for right before an exam.",answers:[
-    {t:"Notes",p:40},{t:"The answers",p:30},{t:"A pencil",p:16},
-    {t:"Emotional support",p:9},{t:"A prayer",p:5}]},
-
-  {cat:'college',q:"Name a moment that makes a student consider dropping out.",answers:[
-    {t:"Finals week",p:38},{t:"Seeing tuition bill",p:26},{t:"A group project",p:18},
-    {t:"An 8 AM class",p:12},{t:"Career fair",p:6}]},
-
-  {cat:'college',q:"Name something a student does in lecture instead of listening.",answers:[
-    {t:"Texting",p:38},{t:"Online shopping",p:26},{t:"Sleeping",p:20},
-    {t:"Drawing",p:10},{t:"Eating",p:6}]},
-
-  {cat:'college',q:"Name the most chaotic place a student has slept.",answers:[
-    {t:"Their car",p:35},{t:"The library",p:28},{t:"Stranger's couch",p:18},
-    {t:"Bathroom floor",p:12},{t:"During class",p:7}]},
+  {cat:'everyday',q:"Name something that has a screen.",answers:[
+    {t:"Television",p:42},{t:"Phone",p:30},{t:"Computer/Laptop",p:18},
+    {t:"Tablet/iPad",p:6},{t:"Window",p:3},{t:"Movie Theater",p:1}]}
 ];
 
 // ═══════════════════════════════════════════════════════════
